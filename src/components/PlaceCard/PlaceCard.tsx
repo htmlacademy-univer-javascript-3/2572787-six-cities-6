@@ -5,8 +5,8 @@ type PlaceCardProps = {
   imageUrl: string;
   price: number;
   rating: number;
-  isPremium: boolean;
-  inBookmarks: boolean;
+  isPremium?: boolean;
+  inBookmarks?: boolean;
 };
 
 function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks }: PlaceCardProps): JSX.Element {

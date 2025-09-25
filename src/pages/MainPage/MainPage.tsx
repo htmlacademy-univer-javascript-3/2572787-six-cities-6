@@ -1,59 +1,28 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCard from '../../components/PlaceCard/PlaceCard';
+import places from './place-example';
 
 type MainPageProps = {
   placeCardsNumber: number;
 }
 
-type Place = {
-  name: string;
-  type: string;
-  imageUrl: string;
-  price: number;
-  rating: number;
-  isPremium: boolean;
-  inBookmarks: boolean;
-}
-
-const placeCards: Place[] = [
-  {
-    name: 'Beautiful &amp; luxurious apartment at great location',
-    type: 'Apartment',
-    imageUrl: 'img/apartment-01.jpg',
-    price: 120,
-    rating: 4,
-    isPremium: true,
-    inBookmarks: false
-  },
-  {
-    name: 'Wood and stone place',
-    type: 'Room',
-    imageUrl: 'img/room.jpg',
-    price: 80,
-    rating: 4,
-    isPremium: false,
-    inBookmarks: true
-  },
-  {
-    name: 'Canal View Prinsengracht',
-    type: 'Apartment',
-    imageUrl: 'img/apartment-02.jpg',
-    price: 132,
-    rating: 4,
-    isPremium: false,
-    inBookmarks: false
-  },
-  {
-    name: 'Nice, cozy, warm big bed apartment',
-    type: 'Apartment',
-    imageUrl: 'img/apartment-03.jpg',
-    price: 180,
-    rating: 5,
-    isPremium: true,
-    inBookmarks: false
-  }
-];
-
 function MainPage({ placeCardsNumber }: MainPageProps): JSX.Element {
+  const placeComponent = Array.from(Array(placeCardsNumber).keys())
+    .map((index) => {
+      const place = places[index % places.length];
+      return (
+        <PlaceCard
+          key={place.name}
+          name={place.name}
+          type={place.type}
+          imageUrl={place.imageUrl}
+          price={place.price}
+          rating={place.rating}
+          isPremium={place.isPremium}
+          inBookmarks={place.inBookmarks}
+        />
+      );
+    });
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -144,22 +113,7 @@ function MainPage({ placeCardsNumber }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {
-                  Array.from(Array(placeCardsNumber).keys())
-                    .map((index) => placeCards[index % placeCards.length])
-                    .map((place) => (
-                      <PlaceCard
-                        key={place.name}
-                        name={place.name}
-                        type={place.type}
-                        imageUrl={place.imageUrl}
-                        price={place.price}
-                        rating={place.rating}
-                        isPremium={place.isPremium}
-                        inBookmarks={place.inBookmarks}
-                      />
-                    ))
-                }
+                {placeComponent}
               </div>
             </section>
             <div className="cities__right-section">

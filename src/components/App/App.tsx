@@ -1,4 +1,4 @@
-import MainPage from '../../pages/main-page/main-page';
+import MainPage from '../../pages/MainPage/MainPage';
 
 type AppProps = {
   placeCardsNumber: number;
