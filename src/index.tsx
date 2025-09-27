@@ -1,12 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './components/App/App';
+
+const enum Settings {
+  PlaceCardsNumber = 10
+}
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+  document.getElementById('root') as HTMLElement,
 );
 
 root.render(
   <React.StrictMode>
-    <h1>Hello, World!</h1>
+    <App placeCardsNumber={Settings.PlaceCardsNumber} />
   </React.StrictMode>,
 );
