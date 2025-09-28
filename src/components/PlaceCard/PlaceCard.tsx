@@ -1,15 +1,13 @@
+import { Link } from 'react-router-dom';
+import AppRoute from '../../const/app-route';
+import PlaceType from '../../types/place-type';
 
 type PlaceCardProps = {
-  name: string;
-  type: string;
-  imageUrl: string;
-  price: number;
-  rating: number;
-  isPremium?: boolean;
-  inBookmarks?: boolean;
+  place: PlaceType;
 };
 
-function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks }: PlaceCardProps): JSX.Element {
+function PlaceCard({ place }: PlaceCardProps): JSX.Element {
+  const { id, name, type, imageUrl, price, rating, isPremium, inBookmarks } = place;
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
 
@@ -22,9 +20,9 @@ function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks
         </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img className="place-card__image" src={imageUrl} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -46,7 +44,7 @@ function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{name}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

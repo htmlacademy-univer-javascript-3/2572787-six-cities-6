@@ -1,29 +1,12 @@
 import Logo from '../../components/Logo/Logo';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
-import places from '../../mocks/places';
+import PlaceType from '../../types/place-type';
 
 type MainPageProps = {
-  placeCardsNumber: number;
+  places: PlaceType[];
 }
 
-function MainPage({ placeCardsNumber }: MainPageProps): JSX.Element {
-  const placeComponent = Array.from(Array(placeCardsNumber).keys())
-    .map((index) => {
-      const place = places[index % places.length];
-      return (
-        <PlaceCard
-          key={place.name}
-          name={place.name}
-          type={place.type}
-          imageUrl={place.imageUrl}
-          price={place.price}
-          rating={place.rating}
-          isPremium={place.isPremium}
-          inBookmarks={place.inBookmarks}
-        />
-      );
-    });
-
+function MainPage({ places }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -112,7 +95,12 @@ function MainPage({ placeCardsNumber }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {placeComponent}
+                {places.map((place) => (
+                  <PlaceCard
+                    key={place.id}
+                    place={place}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

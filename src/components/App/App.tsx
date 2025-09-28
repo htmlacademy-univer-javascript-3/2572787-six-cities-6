@@ -7,18 +7,19 @@ import OfferPage from '../../pages/OfferPage/OfferPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
+import PlaceType from '../../types/place-type';
 
 type AppProps = {
-  placeCardsNumber: number;
+  places: PlaceType[];
 }
 
-function App({ placeCardsNumber }: AppProps): JSX.Element {
+function App({ places }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage placeCardsNumber={placeCardsNumber} />}
+          element={<MainPage places={places} />}
         />
         <Route
           path={AppRoute.Login}
