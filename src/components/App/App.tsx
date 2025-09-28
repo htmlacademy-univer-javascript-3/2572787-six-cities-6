@@ -33,7 +33,7 @@ function App({ placeCardsNumber }: AppProps): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Offer}
+          path={`${AppRoute.Offer}/:id`}
           element={<OfferPage />}
         />
         <Route
