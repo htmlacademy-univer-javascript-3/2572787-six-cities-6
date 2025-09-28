@@ -1,7 +1,8 @@
-import PlaceType from '../../types/place-type';
+import PlaceType from '../types/place-type';
 
 const places: PlaceType[] = [
   {
+    id: 0,
     name: 'Beautiful &amp; luxurious apartment at great location',
     type: 'Apartment',
     imageUrl: 'img/apartment-01.jpg',
@@ -11,6 +12,7 @@ const places: PlaceType[] = [
     inBookmarks: false
   },
   {
+    id: 1,
     name: 'Wood and stone place',
     type: 'Room',
     imageUrl: 'img/room.jpg',
@@ -20,6 +22,7 @@ const places: PlaceType[] = [
     inBookmarks: true
   },
   {
+    id: 2,
     name: 'Canal View Prinsengracht',
     type: 'Apartment',
     imageUrl: 'img/apartment-02.jpg',
@@ -29,6 +32,7 @@ const places: PlaceType[] = [
     inBookmarks: false
   },
   {
+    id: 3,
     name: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
     imageUrl: 'img/apartment-03.jpg',

@@ -1,6 +1,6 @@
 import Logo from '../../components/Logo/Logo';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
-import places from './place-example';
+import places from '../../mocks/places';
 
 type MainPageProps = {
   placeCardsNumber: number;
