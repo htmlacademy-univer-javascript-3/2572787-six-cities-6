@@ -5,7 +5,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
 import OfferPage from '../../pages/OfferPage/OfferPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
 
 type AppProps = {
@@ -22,14 +22,24 @@ function App({ placeCardsNumber }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={
+            <ProtectedRoute
+              restrictedFor={AuthorizationStatus.Auth}
+              redirectTo={AppRoute.Main}
+            >
+              <LoginPage />
+            </ProtectedRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <ProtectedRoute
+              restrictedFor={AuthorizationStatus.NoAuth}
+              redirectTo={AppRoute.Login}
+            >
               <FavouritesPage />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         />
         <Route
