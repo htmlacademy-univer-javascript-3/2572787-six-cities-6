@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
-
-const enum Settings {
-  PlaceCardsNumber = 10
-}
+import places from './mocks/places';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -12,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App placeCardsNumber={Settings.PlaceCardsNumber} />
+    <App places={places} />
   </React.StrictMode>,
 );

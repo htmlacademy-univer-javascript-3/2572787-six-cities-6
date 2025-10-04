@@ -2,44 +2,49 @@ import MainPage from '../../pages/MainPage/MainPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
 import LoginPage from '../../pages/LoginPage/LoginPage';
-import FavouritesPage from '../../pages/FavouritesPage/FavouritesPage';
-import OfferPage from '../../pages/OfferPage/OfferPage';
+import FavoritesPage from '../../pages/FavoritesPage/FavoritesPage';
+import PlacePage from '../../pages/PlacePage/PlacePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
+import PlaceDetailsType from '../../types/place-details-type';
 
 type AppProps = {
-  placeCardsNumber: number;
-}
+  places: PlaceDetailsType[];
+};
 
-function App({ placeCardsNumber }: AppProps): JSX.Element {
+function App({ places }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<MainPage placeCardsNumber={placeCardsNumber} />}
-        />
+        <Route path={AppRoute.Main} element={<MainPage places={places} />} />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={
+            <ProtectedRoute
+              restrictedFor={AuthorizationStatus.Auth}
+              redirectTo={AppRoute.Main}
+            >
+              <LoginPage />
+            </ProtectedRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <FavouritesPage />
-            </PrivateRoute>
+            <ProtectedRoute
+              restrictedFor={AuthorizationStatus.NoAuth}
+              redirectTo={AppRoute.Login}
+            >
+              <FavoritesPage favoritePlaces={places} />
+            </ProtectedRoute>
           }
         />
         <Route
-          path={AppRoute.Offer}
-          element={<OfferPage />}
+          path={`${AppRoute.Offer}/:id`}
+          element={<PlacePage places={places} />}
         />
-        <Route
-          path="*"
-          element={<NotFoundPage />}
-        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,14 @@
+import PlaceDetailsType from './place-details-type';
 
-type PlaceType = {
-  name: string;
+type PlaceType = PlaceDetailsType & {
+  id: string;
+  title: string;
   type: string;
-  imageUrl: string;
+  images: string[];
   price: number;
   rating: number;
   isPremium: boolean;
-  inBookmarks: boolean;
+  isFavorite: boolean;
 }
 
 export default PlaceType;
