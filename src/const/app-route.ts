@@ -3,7 +3,8 @@ enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer'
+  Offer = '/offer',
+  NotFound = '/not-found'
 }
 
 export default AppRoute;
