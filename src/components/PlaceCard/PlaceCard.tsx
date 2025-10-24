@@ -1,30 +1,51 @@
+import { Link } from 'react-router-dom';
+import AppRoute from '../../const/app-route';
+import PlaceType from '../../types/place-type';
+import Bookmark from '../Bookmark/Bookmark';
 
 type PlaceCardProps = {
-  name: string;
-  type: string;
-  imageUrl: string;
-  price: number;
-  rating: number;
-  isPremium?: boolean;
-  inBookmarks?: boolean;
+  place: PlaceType;
+  block: 'cities' | 'favorites';
+  previewImageSize: {
+    width: string;
+    height: string;
+  };
+  onCardHover?: (id: PlaceType['id'] | null) => void;
 };
 
-function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks }: PlaceCardProps): JSX.Element {
+function PlaceCard({
+  place,
+  block,
+  previewImageSize,
+  onCardHover,
+}: PlaceCardProps): JSX.Element {
+  const { id, title, type, images, price, rating, isPremium, isFavorite } =
+    place;
+  const [previewImageUrl] = images;
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
 
   return (
-    <article className="cities__card place-card">
-      {
-        isPremium &&
+    <article
+      className={`${block}__card place-card`}
+      onMouseEnter={() => onCardHover?.(id)}
+      onMouseLeave={() => onCardHover?.(null)}
+    >
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-      }
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={imageUrl} width="260" height="200" alt="Place image" />
-        </a>
+      )}
+      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
+          <img
+            className="place-card__image"
+            src={previewImageUrl}
+            width={previewImageSize.width}
+            height={previewImageSize.height}
+            alt="Place image"
+          />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -32,12 +53,11 @@ function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${inBookmarks && 'place-card__bookmark-button--active'} button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{inBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <Bookmark
+            block="place-card"
+            bookmarkSize={{ width: '18', height: '19' }}
+            inBookmarks={isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -46,7 +66,7 @@ function PlaceCard({ name, type, imageUrl, price, rating, isPremium, inBookmarks
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
