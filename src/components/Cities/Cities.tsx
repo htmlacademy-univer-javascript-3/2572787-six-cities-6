@@ -1,13 +1,18 @@
 import PlaceType from '../../types/place-type';
 import { useState } from 'react';
 import PlaceCard from '../PlaceCard/PlaceCard';
+import Map from '../Map/Map';
+import CityType from '../../types/city-type';
 
 type CitiesProps = {
+  city: CityType;
   places: PlaceType[];
 };
 
-function Cities({ places }: CitiesProps): JSX.Element {
-  const [, setHoveredPlace] = useState<PlaceType['id'] | null>(null);
+function Cities({ city, places }: CitiesProps): JSX.Element {
+  const [hoveredPlace, setHoveredPlace] = useState<PlaceType | undefined>(
+    undefined,
+  );
 
   return (
     <div className="cities">
@@ -47,14 +52,14 @@ function Cities({ places }: CitiesProps): JSX.Element {
                 key={place.id}
                 place={place}
                 block="cities"
-                previewImageSize={{ width: '260', height: '200' }}
+                imageSize="big"
                 onCardHover={setHoveredPlace}
               />
             ))}
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <Map city={city} points={places} selectedPoint={hoveredPlace} />
         </div>
       </div>
     </div>

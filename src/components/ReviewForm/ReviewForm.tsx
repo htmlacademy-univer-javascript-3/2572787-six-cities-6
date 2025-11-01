@@ -1,12 +1,5 @@
 import { Fragment, ChangeEvent, useState } from 'react';
-
-const RATINGS = [
-  { value: '5', title: 'perfect' },
-  { value: '4', title: 'good' },
-  { value: '3', title: 'not bad' },
-  { value: '2', title: 'badly' },
-  { value: '1', title: 'terribly' },
-];
+import { RATINGS } from '../../const/ratings';
 
 function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState('');
