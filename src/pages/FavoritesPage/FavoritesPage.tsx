@@ -60,7 +60,7 @@ function FavoritesPage({ favoritePlaces }: FavoritesPageProps): JSX.Element {
                       key={place.id}
                       place={place}
                       block="favorites"
-                      previewImageSize={{ width: '150', height: '110' }}
+                      imageSize="small"
                     />
                   ))}
                 </div>

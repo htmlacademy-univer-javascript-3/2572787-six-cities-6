@@ -22,7 +22,7 @@ function Bookmark({
 
   return (
     <button
-      className={`${block}__bookmark-button ${checked && `${block}__bookmark-button--active`} button`}
+      className={`${block}__bookmark-button ${checked ? `${block}__bookmark-button--active` : ''} button`}
       type="button"
       onClick={handleBookmarkClick}
     >

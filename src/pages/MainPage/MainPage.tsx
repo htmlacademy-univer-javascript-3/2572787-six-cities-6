@@ -79,7 +79,7 @@ function MainPage({ places }: MainPageProps): JSX.Element {
             </ul>
           </section>
         </div>
-        <Cities places={places} />
+        <Cities city={places[0].city} places={places} />
       </main>
     </div>
   );

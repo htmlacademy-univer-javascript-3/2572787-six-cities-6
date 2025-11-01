@@ -6,21 +6,26 @@ import Bookmark from '../Bookmark/Bookmark';
 type PlaceCardProps = {
   place: PlaceType;
   block: 'cities' | 'favorites';
-  previewImageSize: {
-    width: string;
-    height: string;
-  };
-  onCardHover?: (id: PlaceType['id'] | null) => void;
+  imageSize: 'big' | 'small';
+  onCardHover?: (id: PlaceType | undefined) => void;
 };
 
 function PlaceCard({
   place,
   block,
-  previewImageSize,
+  imageSize,
   onCardHover,
 }: PlaceCardProps): JSX.Element {
+  const sizeConfig = {
+    big: { width: '260px', height: '200px' },
+    small: { width: '150px', height: '110px' },
+  };
+
+  const imageStyle = sizeConfig[imageSize];
+
   const { id, title, type, images, price, rating, isPremium, isFavorite } =
     place;
+
   const [previewImageUrl] = images;
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
@@ -28,8 +33,8 @@ function PlaceCard({
   return (
     <article
       className={`${block}__card place-card`}
-      onMouseEnter={() => onCardHover?.(id)}
-      onMouseLeave={() => onCardHover?.(null)}
+      onMouseEnter={() => onCardHover?.(place)}
+      onMouseLeave={() => onCardHover?.(undefined)}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -41,8 +46,7 @@ function PlaceCard({
           <img
             className="place-card__image"
             src={previewImageUrl}
-            width={previewImageSize.width}
-            height={previewImageSize.height}
+            {...imageStyle}
             alt="Place image"
           />
         </Link>
