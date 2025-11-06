@@ -1,8 +1,8 @@
 import PlaceType from '../../types/place-type';
 import { useState } from 'react';
-import PlaceCard from '../PlaceCard/PlaceCard';
 import Map from '../Map/Map';
 import CityType from '../../types/city-type';
+import PlaceCards from '../PlaceCards/PlaceCards';
 
 type CitiesProps = {
   city: CityType;
@@ -46,20 +46,20 @@ function Cities({ city, places }: CitiesProps): JSX.Element {
               </li>
             </ul>
           </form>
-          <div className="cities__places-list places__list tabs__content">
-            {places.map((place) => (
-              <PlaceCard
-                key={place.id}
-                place={place}
-                block="cities"
-                imageSize="big"
-                onCardHover={setHoveredPlace}
-              />
-            ))}
-          </div>
+          <PlaceCards
+            places={places}
+            block="cities"
+            cardImageSize="big"
+            onCardHover={setHoveredPlace}
+          />
         </section>
         <div className="cities__right-section">
-          <Map city={city} points={places} selectedPoint={hoveredPlace} />
+          <Map
+            city={city}
+            block="cities"
+            points={places}
+            selectedPoint={hoveredPlace}
+          />
         </div>
       </div>
     </div>

@@ -8,12 +8,14 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
 import PlaceDetailsType from '../../types/place-details-type';
+import ReviewType from '../../types/review-type';
 
 type AppProps = {
   places: PlaceDetailsType[];
+  reviews: ReviewType[];
 };
 
-function App({ places }: AppProps): JSX.Element {
+function App({ places, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -42,7 +44,7 @@ function App({ places }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={<PlacePage places={places} />}
+          element={<PlacePage places={places} reviews={reviews} />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

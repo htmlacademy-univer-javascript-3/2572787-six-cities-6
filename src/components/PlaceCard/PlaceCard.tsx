@@ -5,9 +5,9 @@ import Bookmark from '../Bookmark/Bookmark';
 
 type PlaceCardProps = {
   place: PlaceType;
-  block: 'cities' | 'favorites';
+  block: 'cities' | 'favorites' | 'near-places';
   imageSize: 'big' | 'small';
-  onCardHover?: (id: PlaceType | undefined) => void;
+  onCardHover?: (place: PlaceType | undefined) => void;
 };
 
 function PlaceCard({

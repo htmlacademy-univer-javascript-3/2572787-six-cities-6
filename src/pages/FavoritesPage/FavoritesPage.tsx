@@ -1,7 +1,7 @@
 import Logo from '../../components/Logo/Logo';
 import PlaceType from '../../types/place-type';
-import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import AppRoute from '../../const/app-route';
+import PlaceCards from '../../components/PlaceCards/PlaceCards';
 
 type FavoritesPageProps = {
   favoritePlaces: PlaceType[];
@@ -54,16 +54,11 @@ function FavoritesPage({ favoritePlaces }: FavoritesPageProps): JSX.Element {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  {favoritePlaces.map((place) => (
-                    <PlaceCard
-                      key={place.id}
-                      place={place}
-                      block="favorites"
-                      imageSize="small"
-                    />
-                  ))}
-                </div>
+                <PlaceCards
+                  places={favoritePlaces}
+                  block="favorites"
+                  cardImageSize="small"
+                />
               </li>
             </ul>
           </section>
