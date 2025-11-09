@@ -8,6 +8,7 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const/marker';
 
 type MapProps = {
   city: CityType;
+  block: 'cities' | 'offer';
   points: PlaceType[];
   selectedPoint?: PlaceType;
 };
@@ -25,7 +26,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, points, selectedPoint } = props;
+  const { city, block, points, selectedPoint } = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -56,12 +57,10 @@ function Map(props: MapProps): JSX.Element {
 
   return (
     <section
-      className="cities__map map"
+      className={`${block}__map map`}
       style={{ height: '500px' }}
       ref={mapRef}
-    >
-      {''}
-    </section>
+    />
   );
 }
 

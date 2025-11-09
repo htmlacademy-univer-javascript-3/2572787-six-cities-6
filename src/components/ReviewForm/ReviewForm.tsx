@@ -1,4 +1,4 @@
-import { Fragment, ChangeEvent, useState } from 'react';
+import { Fragment, ChangeEvent, useState, FormEvent } from 'react';
 import { RATINGS } from '../../const/ratings';
 
 function ReviewForm(): JSX.Element {
@@ -15,8 +15,14 @@ function ReviewForm(): JSX.Element {
     setReview(value);
   };
 
+  const handleReviewSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setRating('');
+    setReview('');
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={handleReviewSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -51,9 +57,7 @@ function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
         onChange={handleReviewChange}
-      >
-        {''}
-      </textarea>
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -63,7 +67,7 @@ function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={rating.length === 0 || review.length < 50}
         >
           Submit
         </button>

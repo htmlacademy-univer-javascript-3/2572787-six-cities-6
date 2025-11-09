@@ -28,7 +28,7 @@ const places: PlaceDetailsType[] = [
     goods: ['Heating'],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-01.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: false,
     },
     images: ['img/apartment-01.jpg'],
@@ -61,7 +61,7 @@ const places: PlaceDetailsType[] = [
     goods: ['Heating'],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/room.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: false,
     },
     images: ['img/room.jpg'],
@@ -94,7 +94,7 @@ const places: PlaceDetailsType[] = [
     goods: ['Heating'],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-02.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: false,
     },
     images: ['img/apartment-02.jpg'],
@@ -127,7 +127,7 @@ const places: PlaceDetailsType[] = [
     goods: ['Heating'],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-03.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: false,
     },
     images: ['img/apartment-03.jpg'],
