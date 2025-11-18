@@ -1,6 +1,5 @@
 import Logo from '../../components/Logo/Logo';
 import { Navigate, useParams } from 'react-router-dom';
-import PlaceDetailsType from '../../types/place-details-type';
 import AppRoute from '../../const/app-route';
 import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
@@ -9,14 +8,15 @@ import Map from '../../components/Map/Map';
 import { useState } from 'react';
 import PlaceType from '../../types/place-type';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
+import useAppSelector from '../../hooks/use-app-selector';
 
 type PlacePageProps = {
-  places: PlaceDetailsType[];
   reviews: ReviewType[];
 };
 
-function PlacePage({ places, reviews }: PlacePageProps): JSX.Element {
+function PlacePage({ reviews }: PlacePageProps): JSX.Element {
   const { id } = useParams();
+  const places = useAppSelector((state) => state.places);
   const place = places.find((e) => e.id === id);
   const nearPlaces = places.filter((e) => e.id !== id);
 
