@@ -5,6 +5,7 @@ import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import cityNames from '../../const/cities';
 import { changeCity } from '../../store/action';
+import classNames from 'classnames';
 
 function MainPage(): JSX.Element {
   const city = useAppSelector((state) => state.city);
@@ -56,7 +57,13 @@ function MainPage(): JSX.Element {
               {cityNames.map((cityName) => (
                 <li key={btoa(cityName)} className="locations__item">
                   <a
-                    className={`locations__item-link tabs__item ${cityName === city.name ? 'tabs__item--active' : ''}`}
+                    className={classNames(
+                      'locations__item-link',
+                      'tabs__item',
+                      {
+                        'tabs__item--active': cityName === city.name,
+                      },
+                    )}
                     onClick={(e) => {
                       e.preventDefault();
                       handleChangeCity(cityName);

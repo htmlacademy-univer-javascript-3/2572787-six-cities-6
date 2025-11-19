@@ -9,6 +9,7 @@ import { useState } from 'react';
 import PlaceType from '../../types/place-type';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
+import classNames from 'classnames';
 
 type PlacePageProps = {
   reviews: ReviewType[];
@@ -147,7 +148,13 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div
-                    className={`offer__avatar-wrapper ${place.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}
+                    className={classNames(
+                      'offer__avatar-wrapper',
+                      'user__avatar-wrapper',
+                      {
+                        'offer__avatar-wrapper--pro': place.host.isPro,
+                      },
+                    )}
                   >
                     <img
                       className="offer__avatar user__avatar"
