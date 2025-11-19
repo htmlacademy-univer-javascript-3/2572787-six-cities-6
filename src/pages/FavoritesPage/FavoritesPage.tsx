@@ -1,13 +1,12 @@
 import Logo from '../../components/Logo/Logo';
-import PlaceType from '../../types/place-type';
 import AppRoute from '../../const/app-route';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
+import useAppSelector from '../../hooks/use-app-selector';
 
-type FavoritesPageProps = {
-  favoritePlaces: PlaceType[];
-};
+function FavoritesPage(): JSX.Element {
+  const places = useAppSelector((state) => state.places);
+  const favoritePlaces = places.filter((place) => place.isFavorite);
 
-function FavoritesPage({ favoritePlaces }: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">

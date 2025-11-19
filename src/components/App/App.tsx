@@ -7,19 +7,17 @@ import PlacePage from '../../pages/PlacePage/PlacePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
-import PlaceDetailsType from '../../types/place-details-type';
 import ReviewType from '../../types/review-type';
 
 type AppProps = {
-  places: PlaceDetailsType[];
   reviews: ReviewType[];
 };
 
-function App({ places, reviews }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainPage places={places} />} />
+        <Route path={AppRoute.Main} element={<MainPage />} />
         <Route
           path={AppRoute.Login}
           element={
@@ -38,13 +36,13 @@ function App({ places, reviews }: AppProps): JSX.Element {
               restrictedFor={AuthorizationStatus.NoAuth}
               redirectTo={AppRoute.Login}
             >
-              <FavoritesPage favoritePlaces={places} />
+              <FavoritesPage />
             </ProtectedRoute>
           }
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={<PlacePage places={places} reviews={reviews} />}
+          element={<PlacePage reviews={reviews} />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

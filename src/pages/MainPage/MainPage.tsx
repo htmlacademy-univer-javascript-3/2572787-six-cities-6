@@ -1,13 +1,20 @@
 import Logo from '../../components/Logo/Logo';
-import PlaceType from '../../types/place-type';
 import Cities from '../../components/Cities/Cities';
 import AppRoute from '../../const/app-route';
+import useAppSelector from '../../hooks/use-app-selector';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import cityNames from '../../const/cities';
+import { changeCity } from '../../store/action';
 
-type MainPageProps = {
-  places: PlaceType[];
-};
+function MainPage(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const places = useAppSelector((state) => state.places);
+  const dispatch = useAppDispatch();
 
-function MainPage({ places }: MainPageProps): JSX.Element {
+  const handleChangeCity = (cityName: string) => {
+    dispatch(changeCity({ city: cityName }));
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -46,40 +53,23 @@ function MainPage({ places }: MainPageProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {cityNames.map((cityName) => (
+                <li key={btoa(cityName)} className="locations__item">
+                  <a
+                    className={`locations__item-link tabs__item ${cityName === city.name ? 'tabs__item--active' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleChangeCity(cityName);
+                    }}
+                  >
+                    <span>{cityName}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
-        <Cities city={places[0].city} places={places} />
+        <Cities city={city} places={places} />
       </main>
     </div>
   );
