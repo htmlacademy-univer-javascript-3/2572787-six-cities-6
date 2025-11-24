@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Map from '../Map/Map';
 import CityType from '../../types/city-type';
 import PlaceCards from '../PlaceCards/PlaceCards';
+import Sorting from '../Sorting/Sorting';
+import { SortOption } from '../../types/sort-options';
+import { sortPlaces } from '../../helpers/place-sort-helper';
 
 type CitiesProps = {
   city: CityType;
@@ -13,8 +16,10 @@ function Cities({ city, places }: CitiesProps): JSX.Element {
   const [hoveredPlace, setHoveredPlace] = useState<PlaceType | undefined>(
     undefined,
   );
+  const [sortOption, setSortOption] = useState<SortOption>('Popular');
 
   const placesInCity = places.filter((place) => place.city.name === city.name);
+  const sortedPlaces = sortPlaces(placesInCity, sortOption);
 
   return (
     <div className="cities">
@@ -22,36 +27,14 @@ function Cities({ city, places }: CitiesProps): JSX.Element {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">
-            {placesInCity.length} places to stay in {city.name}
+            {sortedPlaces.length} places to stay in {city.name}
           </b>
-          <form className="places__sorting" action="#" method="get">
-            <span className="places__sorting-caption">Sort by</span>
-            <span className="places__sorting-type" tabIndex={0}>
-              Popular
-              <svg className="places__sorting-arrow" width="7" height="4">
-                <use xlinkHref="#icon-arrow-select"></use>
-              </svg>
-            </span>
-            <ul className="places__options places__options--custom places__options--opened">
-              <li
-                className="places__option places__option--active"
-                tabIndex={0}
-              >
-                Popular
-              </li>
-              <li className="places__option" tabIndex={0}>
-                Price: low to high
-              </li>
-              <li className="places__option" tabIndex={0}>
-                Price: high to low
-              </li>
-              <li className="places__option" tabIndex={0}>
-                Top rated first
-              </li>
-            </ul>
-          </form>
+          <Sorting
+            currentSortOption={sortOption}
+            onSortChange={(option) => setSortOption(option)}
+          />
           <PlaceCards
-            places={placesInCity}
+            places={sortedPlaces}
             block="cities"
             cardImageSize="big"
             onCardHover={setHoveredPlace}
@@ -61,7 +44,7 @@ function Cities({ city, places }: CitiesProps): JSX.Element {
           <Map
             city={city}
             block="cities"
-            points={placesInCity}
+            points={sortedPlaces}
             selectedPoint={hoveredPlace}
           />
         </div>
