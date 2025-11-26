@@ -42,7 +42,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== null && point.title === selectedPoint?.title
+            selectedPoint !== null && point.id === selectedPoint?.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )

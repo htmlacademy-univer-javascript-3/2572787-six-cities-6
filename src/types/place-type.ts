@@ -1,14 +1,17 @@
-import PlaceDetailsType from './place-details-type';
+import CityType from './city-type';
+import LocationType from './location-type';
 
-type PlaceType = PlaceDetailsType & {
+type PlaceType = {
   id: string;
   title: string;
   type: string;
-  images: string[];
   price: number;
-  rating: number;
-  isPremium: boolean;
+  city: CityType;
+  location: LocationType;
   isFavorite: boolean;
-}
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+};
 
 export default PlaceType;

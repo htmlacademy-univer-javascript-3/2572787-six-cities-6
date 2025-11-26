@@ -23,10 +23,17 @@ function PlaceCard({
 
   const imageStyle = sizeConfig[imageSize];
 
-  const { id, title, type, images, price, rating, isPremium, isFavorite } =
-    place;
+  const {
+    id,
+    title,
+    type,
+    price,
+    isFavorite,
+    isPremium,
+    rating,
+    previewImage,
+  } = place;
 
-  const [previewImageUrl] = images;
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
 
@@ -45,7 +52,7 @@ function PlaceCard({
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
-            src={previewImageUrl}
+            src={previewImage}
             {...imageStyle}
             alt="Place image"
           />

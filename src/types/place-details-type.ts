@@ -18,6 +18,6 @@ type PlaceDetailsType = {
   host: HostType;
   images: string[];
   maxAdults: number;
-}
+};
 
 export default PlaceDetailsType;

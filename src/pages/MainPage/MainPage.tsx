@@ -4,7 +4,7 @@ import AppRoute from '../../const/app-route';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import cityNames from '../../const/cities';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/actions';
 import classNames from 'classnames';
 
 function MainPage(): JSX.Element {

@@ -1,11 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, updatePlaces } from './action';
-import places from '../mocks/places';
+import { changeCity, updateSelectedPlace, updatePlaces } from './actions';
 import cities from '../mocks/cities';
+import CityType from '../types/city-type';
+import PlaceType from '../types/place-type';
+import PlaceDetailsType from '../types/place-details-type';
 
-const initialState = {
+type InitialState = {
+  city: CityType;
+  places: PlaceType[];
+  selectedPlace?: {
+    detailedInfo: PlaceDetailsType;
+    nearPlaces: PlaceType[];
+  };
+};
+
+const initialState: InitialState = {
   city: cities[0],
-  places,
+  places: [],
+  selectedPlace: undefined,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -18,8 +30,11 @@ const reducer = createReducer(initialState, (builder) => {
       }
       state.city = foundCity;
     })
-    .addCase(updatePlaces, (state) => {
-      state.places = places;
+    .addCase(updatePlaces, (state, action) => {
+      state.places = action.payload.places;
+    })
+    .addCase(updateSelectedPlace, (state, action) => {
+      state.selectedPlace = action.payload.place;
     });
 });
 
