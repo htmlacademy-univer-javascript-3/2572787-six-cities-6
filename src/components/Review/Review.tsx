@@ -7,16 +7,16 @@ type ReviewProps = {
 
 function Review({
   review: {
-    author: { name, avatarUrl },
-    dateTime,
-    text,
+    user: { name, avatarUrl },
+    date,
+    comment,
     rating,
   },
 }: ReviewProps): JSX.Element {
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
 
-  const { date, displayDate } = formatDate(dateTime);
+  const { date: formatedDate, displayDate } = formatDate(date);
 
   return (
     <>
@@ -39,12 +39,8 @@ function Review({
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        {text.split('\n').map((paragraph) => (
-          <p key={btoa(paragraph)} className="reviews__text">
-            {paragraph}
-          </p>
-        ))}
-        <time className="reviews__time" dateTime={date}>
+        <p className="reviews__text">{comment}</p>
+        <time className="reviews__time" dateTime={formatedDate}>
           {displayDate}
         </time>
       </div>

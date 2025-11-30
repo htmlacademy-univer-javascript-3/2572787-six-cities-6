@@ -1,9 +1,12 @@
 import { Fragment, ChangeEvent, useState, FormEvent } from 'react';
 import { RATINGS } from '../../const/ratings';
+import { sendReview } from '../../store/api-actions';
+import useAppDispatch from '../../hooks/use-app-dispatch';
 
 function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState('');
   const [review, setReview] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -17,6 +20,7 @@ function ReviewForm(): JSX.Element {
 
   const handleReviewSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(sendReview({ comment: review, rating: Number(rating) }));
     setRating('');
     setReview('');
   };

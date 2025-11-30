@@ -8,15 +8,10 @@ import PlacePage from '../../pages/PlacePage/PlacePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
-import ReviewType from '../../types/review-type';
 import { checkUserToken, fetchPlacesAction } from '../../store/api-actions';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 
-type AppProps = {
-  reviews: ReviewType[];
-};
-
-function App({ reviews }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -50,10 +45,7 @@ function App({ reviews }: AppProps): JSX.Element {
             </ProtectedRoute>
           }
         />
-        <Route
-          path={`${AppRoute.Offer}/:id`}
-          element={<PlacePage reviews={reviews} />}
-        />
+        <Route path={`${AppRoute.Offer}/:id`} element={<PlacePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

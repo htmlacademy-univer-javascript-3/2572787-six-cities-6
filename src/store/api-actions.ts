@@ -13,6 +13,7 @@ import PlaceDetailsType from '../types/place-details-type';
 import AuthInfoType from '../types/auth-info-type';
 import AuthorizationStatus from '../const/authorization-status';
 import { saveToken } from '../services/token';
+import ReviewType from '../types/review-type';
 
 export const fetchPlacesAction = createAsyncThunk<
   void,
@@ -36,15 +37,58 @@ export const fetchPlaceAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('data/fetchPlace', async ({ id }, { dispatch, extra: api }) => {
-  const { data: detailedInfo } = await api.get<PlaceDetailsType>(
-    `${ApiRoute.Offers}/${id}`,
-  );
-  const { data: nearPlaces } = await api.get<PlaceType[]>(
-    `${ApiRoute.Offers}/${id}/nearby`,
+  try {
+    const { data: detailedInfo } = await api.get<PlaceDetailsType>(
+      `${ApiRoute.Offers}/${id}`,
+    );
+    const { data: nearPlaces } = await api.get<PlaceType[]>(
+      `${ApiRoute.Offers}/${id}/nearby`,
+    );
+    const { data: reviews } = await api.get<ReviewType[]>(
+      `${ApiRoute.Reviews}/${id}`,
+    );
+    dispatch(
+      updateSelectedPlace({
+        place: {
+          detailedInfo,
+          nearPlaces: nearPlaces.slice(0, 3),
+          reviews,
+        },
+      }),
+    );
+  } catch {
+    dispatch(updateSelectedPlace({ place: 'not-found' }));
+  }
+});
+
+export const sendReview = createAsyncThunk<
+  void,
+  {
+    comment: string;
+    rating: number;
+  },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/send-review', async (review, { getState, dispatch, extra: api }) => {
+  const selectedPlace = getState().selectedPlace;
+
+  if (selectedPlace === undefined || selectedPlace === 'not-found') {
+    return;
+  }
+
+  const { data: newReview } = await api.post<ReviewType>(
+    `${ApiRoute.Reviews}/${selectedPlace.detailedInfo.id}`,
+    review,
   );
   dispatch(
     updateSelectedPlace({
-      place: { detailedInfo, nearPlaces: nearPlaces.slice(0, 3) },
+      place: {
+        ...selectedPlace,
+        reviews: selectedPlace.reviews.concat(newReview),
+      },
     }),
   );
 });

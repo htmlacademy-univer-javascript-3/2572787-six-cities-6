@@ -1,12 +1,12 @@
 type ReviewType = {
   id: string;
-  dateTime: Date;
-  author: {
+  date: string;
+  user: {
     name: string;
     avatarUrl: string;
     isPro: boolean;
   };
-  text: string;
+  comment: string;
   rating: number;
 };
 

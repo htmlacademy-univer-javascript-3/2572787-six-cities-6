@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import AppRoute from '../../const/app-route';
 import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
-import ReviewType from '../../types/review-type';
 import Map from '../../components/Map/Map';
 import PlaceType from '../../types/place-type';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
@@ -16,14 +15,9 @@ import { toPlaceType } from '../../helpers/place-mapper';
 import Spinner from '../../components/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 
-type PlacePageProps = {
-  reviews: ReviewType[];
-};
-
-function PlacePage({ reviews }: PlacePageProps): JSX.Element {
+function PlacePage(): JSX.Element {
   const { id } = useParams();
   const place = useAppSelector((state) => state.selectedPlace);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -37,11 +31,15 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
     undefined,
   );
 
-  if (!place) {
+  if (place === undefined) {
     return <Spinner />;
   }
 
-  const { detailedInfo, nearPlaces } = place;
+  if (place === 'not-found') {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
+  const { detailedInfo, nearPlaces, reviews } = place;
   const mappedPlace = toPlaceType(detailedInfo);
   const places = [...nearPlaces, mappedPlace];
 
