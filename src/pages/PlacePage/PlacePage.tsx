@@ -1,4 +1,3 @@
-import Logo from '../../components/Logo/Logo';
 import { Navigate, useParams } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
 import Bookmark from '../../components/Bookmark/Bookmark';
@@ -15,6 +14,7 @@ import { updateSelectedPlace } from '../../store/actions';
 import { fetchPlaceAction } from '../../store/api-actions';
 import { toPlaceType } from '../../helpers/place-mapper';
 import Spinner from '../../components/Spinner/Spinner';
+import Header from '../../components/Header/Header';
 
 type PlacePageProps = {
   reviews: ReviewType[];
@@ -63,37 +63,7 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href={AppRoute.Favorites}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header showUserInfo />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">

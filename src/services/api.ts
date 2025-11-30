@@ -1,4 +1,10 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
+import { dropToken, getToken } from './token';
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -8,6 +14,27 @@ export const createAPI = (): AxiosInstance => {
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
   });
+
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = getToken();
+
+    if (token && config.headers) {
+      config.headers['X-Token'] = token;
+    }
+
+    return config;
+  });
+
+  api.interceptors.response.use(
+    (response: AxiosResponse) => response,
+    (error: AxiosError) => {
+      if (error.response?.status === 401) {
+        dropToken();
+      }
+
+      return Promise.reject(error);
+    },
+  );
 
   return api;
 };

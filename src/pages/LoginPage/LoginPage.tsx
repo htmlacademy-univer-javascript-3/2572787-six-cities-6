@@ -1,7 +1,32 @@
+import { FormEvent, useState } from 'react';
 import Logo from '../../components/Logo/Logo';
 import AppRoute from '../../const/app-route';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import { loginUser } from '../../store/api-actions';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(): JSX.Element {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleLoginSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(loginUser(formData));
+    navigate(AppRoute.Main);
+  };
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -18,7 +43,7 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" onSubmit={handleLoginSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -27,6 +52,7 @@ function LoginPage(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -37,6 +63,7 @@ function LoginPage(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  onChange={handleInputChange}
                 />
               </div>
               <button

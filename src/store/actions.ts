@@ -1,6 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 import PlaceDetailsType from '../types/place-details-type';
 import PlaceType from '../types/place-type';
+import AuthorizationStatus from '../const/authorization-status';
+import UserInfoType from '../types/user-info-type';
 
 export const changeCity = createAction<{ city: string }>('city/change');
 
@@ -14,3 +16,11 @@ export const updateSelectedPlace = createAction<{
     nearPlaces: PlaceType[];
   };
 }>('city/updatePlace');
+
+export const updateAuthorizationStatus = createAction<{
+  status: AuthorizationStatus;
+}>('city/updateAuthorizationStatus');
+
+export const updateUserInfo = createAction<{
+  info?: UserInfoType;
+}>('city/updateUserInfo');
