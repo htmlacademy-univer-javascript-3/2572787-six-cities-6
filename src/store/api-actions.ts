@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { AppDispatch, State } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, State } from '../types/state';
 import {
   updateAuthorizationStatus,
   updatePlaces,

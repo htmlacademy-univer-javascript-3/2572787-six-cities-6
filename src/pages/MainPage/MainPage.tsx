@@ -1,9 +1,9 @@
+import classNames from 'classnames';
 import Cities from '../../components/Cities/Cities';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import cityNames from '../../const/cities';
 import { changeCity } from '../../store/actions';
-import classNames from 'classnames';
 import Header from '../../components/Header/Header';
 
 function MainPage(): JSX.Element {

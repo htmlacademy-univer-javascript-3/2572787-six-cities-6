@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
 import AppRoute from '../../const/app-route';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { loginUser } from '../../store/api-actions';
-import { useNavigate } from 'react-router-dom';
 
 function LoginPage(): JSX.Element {
   const [formData, setFormData] = useState({

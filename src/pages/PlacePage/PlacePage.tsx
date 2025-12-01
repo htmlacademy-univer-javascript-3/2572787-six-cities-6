@@ -1,14 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
+import classNames from 'classnames';
 import AppRoute from '../../const/app-route';
 import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
 import ReviewType from '../../types/review-type';
 import Map from '../../components/Map/Map';
-import { useEffect, useState } from 'react';
 import PlaceType from '../../types/place-type';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
-import classNames from 'classnames';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { updateSelectedPlace } from '../../store/actions';
 import { fetchPlaceAction } from '../../store/api-actions';
