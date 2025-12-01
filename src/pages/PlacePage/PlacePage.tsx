@@ -5,11 +5,16 @@ import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
 import ReviewType from '../../types/review-type';
 import Map from '../../components/Map/Map';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlaceType from '../../types/place-type';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
 import classNames from 'classnames';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import { updateSelectedPlace } from '../../store/actions';
+import { fetchPlaceAction } from '../../store/api-actions';
+import { toPlaceType } from '../../helpers/place-mapper';
+import Spinner from '../../components/Spinner/Spinner';
 
 type PlacePageProps = {
   reviews: ReviewType[];
@@ -17,13 +22,28 @@ type PlacePageProps = {
 
 function PlacePage({ reviews }: PlacePageProps): JSX.Element {
   const { id } = useParams();
-  const places = useAppSelector((state) => state.places);
-  const place = places.find((e) => e.id === id);
-  const nearPlaces = places.filter((e) => e.id !== id);
+  const place = useAppSelector((state) => state.selectedPlace);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(updateSelectedPlace({ place: undefined }));
+    if (id) {
+      dispatch(fetchPlaceAction({ id }));
+    }
+  }, [id, dispatch]);
 
   const [selectedPlace, setSelectedPlace] = useState<PlaceType | undefined>(
-    place,
+    undefined,
   );
+
+  if (!place) {
+    return <Spinner />;
+  }
+
+  const { detailedInfo, nearPlaces } = place;
+  const mappedPlace = toPlaceType(detailedInfo);
+  const places = [...nearPlaces, mappedPlace];
 
   const handleCardHover = (hoveredPlace: PlaceType | undefined) => {
     if (hoveredPlace) {
@@ -31,7 +51,7 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
       return;
     }
 
-    setSelectedPlace(place);
+    setSelectedPlace(mappedPlace);
   };
 
   if (!place) {
@@ -39,7 +59,7 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
   }
 
   const maxRating = 5;
-  const ratingWidthPercentage = (place.rating / maxRating) * 100;
+  const ratingWidthPercentage = (detailedInfo.rating / maxRating) * 100;
 
   return (
     <div className="page">
@@ -78,9 +98,9 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {place.images.map((imageUrl) => (
+              {detailedInfo.images.map((imageUrl) => (
                 <div
-                  key={`${place.id}_${btoa(imageUrl)}`}
+                  key={`${detailedInfo.id}_${btoa(imageUrl)}`}
                   className="offer__image-wrapper"
                 >
                   <img
@@ -94,17 +114,17 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {place.isPremium && (
+              {detailedInfo.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{place.title}</h1>
+                <h1 className="offer__name">{detailedInfo.title}</h1>
                 <Bookmark
                   block="offer"
                   bookmarkSize={{ width: '31', height: '33' }}
-                  inBookmarks={place.isFavorite}
+                  inBookmarks={detailedInfo.isFavorite}
                 />
               </div>
               <div className="offer__rating rating">
@@ -113,30 +133,30 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
-                  {place.rating}
+                  {detailedInfo.rating}
                 </span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {place.type}
+                  {detailedInfo.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {place.bedrooms} Bedrooms
+                  {detailedInfo.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {place.maxAdults} adults
+                  Max {detailedInfo.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{place.price}</b>
+                <b className="offer__price-value">&euro;{detailedInfo.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {place.goods.map((good) => (
+                  {detailedInfo.goods.map((good) => (
                     <li
-                      key={`${place.id}_${btoa(good)}`}
+                      key={`${detailedInfo.id}_${btoa(good)}`}
                       className="offer__inside-item"
                     >
                       {good}
@@ -152,27 +172,29 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
                       'offer__avatar-wrapper',
                       'user__avatar-wrapper',
                       {
-                        'offer__avatar-wrapper--pro': place.host.isPro,
+                        'offer__avatar-wrapper--pro': detailedInfo.host.isPro,
                       },
                     )}
                   >
                     <img
                       className="offer__avatar user__avatar"
-                      src={place.host.avatarUrl}
+                      src={detailedInfo.host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
-                  <span className="offer__user-name">{place.host.name}</span>
+                  <span className="offer__user-name">
+                    {detailedInfo.host.name}
+                  </span>
                   <span className="offer__user-status">
-                    {place.host.isPro ? 'Pro' : 'Basic'}
+                    {detailedInfo.host.isPro ? 'Pro' : 'Basic'}
                   </span>
                 </div>
                 <div className="offer__description">
-                  {place.description.split('\n').map((paragraph) => (
+                  {detailedInfo.description.split('\n').map((paragraph) => (
                     <p
-                      key={`${place.id}_${btoa(paragraph)}`}
+                      key={`${detailedInfo.id}_${btoa(paragraph)}`}
                       className="offer__text"
                     >
                       {paragraph}
@@ -184,7 +206,7 @@ function PlacePage({ reviews }: PlacePageProps): JSX.Element {
             </div>
           </div>
           <Map
-            city={place.city}
+            city={detailedInfo.city}
             block="offer"
             selectedPoint={selectedPlace}
             points={places}
