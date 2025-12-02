@@ -1,5 +1,5 @@
-import PlaceType from '../../types/place-type';
 import { useState } from 'react';
+import PlaceType from '../../types/place-type';
 import Map from '../Map/Map';
 import CityType from '../../types/city-type';
 import PlaceCards from '../PlaceCards/PlaceCards';

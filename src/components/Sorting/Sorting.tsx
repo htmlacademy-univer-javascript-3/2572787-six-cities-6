@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { sortOptions, SortOption } from '../../types/sort-options';
 import classNames from 'classnames';
+import { sortOptions, SortOption } from '../../types/sort-options';
 
 type SortingProps = {
   currentSortOption: SortOption;

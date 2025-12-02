@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import MainPage from '../../pages/MainPage/MainPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
@@ -8,8 +9,7 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
 import ReviewType from '../../types/review-type';
-import { useEffect } from 'react';
-import { fetchPlacesAction } from '../../store/api-actions';
+import { checkUserToken, fetchPlacesAction } from '../../store/api-actions';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 
 type AppProps = {
@@ -20,6 +20,7 @@ function App({ reviews }: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(checkUserToken());
     dispatch(fetchPlacesAction());
   }, [dispatch]);
 
