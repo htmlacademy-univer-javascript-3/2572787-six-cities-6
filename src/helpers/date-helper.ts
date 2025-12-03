@@ -1,7 +1,8 @@
-export function formatDate(date: Date) {
+export function formatDate(date: string) {
+  const dateObj = new Date(date);
   return {
-    date: date.toISOString().split('T')[0],
-    displayDate: date.toLocaleDateString('en-US', {
+    date: dateObj.toISOString().split('T')[0],
+    displayDate: dateObj.toLocaleDateString('en-US', {
       month: 'long',
       year: 'numeric',
     }),

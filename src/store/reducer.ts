@@ -12,14 +12,18 @@ import PlaceType from '../types/place-type';
 import PlaceDetailsType from '../types/place-details-type';
 import AuthorizationStatus from '../const/authorization-status';
 import UserInfoType from '../types/user-info-type';
+import ReviewType from '../types/review-type';
 
 type InitialState = {
   city: CityType;
   places: PlaceType[];
-  selectedPlace?: {
-    detailedInfo: PlaceDetailsType;
-    nearPlaces: PlaceType[];
-  };
+  selectedPlace?:
+    | {
+        detailedInfo: PlaceDetailsType;
+        nearPlaces: PlaceType[];
+        reviews: ReviewType[];
+      }
+    | 'not-found';
   authorizationStatus: AuthorizationStatus;
   userInfo?: UserInfoType;
 };
