@@ -2,11 +2,11 @@ import Logo from '../../components/Logo/Logo';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
 import Header from '../../components/Header/Header';
-import { getPlaces } from '../../store/selectors/places-selectors';
+import { getFavoritePlaces } from '../../store/selectors/user-selectors';
+import cities from '../../const/cities';
 
 function FavoritesPage(): JSX.Element {
-  const places = useAppSelector(getPlaces);
-  const favoritePlaces = places.filter((place) => place.isFavorite);
+  const favoritePlaces = useAppSelector(getFavoritePlaces);
 
   return (
     <div className="page">
@@ -16,20 +16,33 @@ function FavoritesPage(): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <PlaceCards
-                  places={favoritePlaces}
-                  block="favorites"
-                  cardImageSize="small"
-                />
-              </li>
+              {cities.map((cityName) => {
+                const favoriteInCity = favoritePlaces.filter(
+                  (place) => place.city.name === cityName,
+                );
+
+                if (favoriteInCity.length) {
+                  return (
+                    <li
+                      key={btoa(cityName)}
+                      className="favorites__locations-items"
+                    >
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <a className="locations__item-link" href="#">
+                            <span>{cityName}</span>
+                          </a>
+                        </div>
+                      </div>
+                      <PlaceCards
+                        places={favoriteInCity}
+                        block="favorites"
+                        cardImageSize="small"
+                      />
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </section>
         </div>

@@ -17,8 +17,7 @@ function Cities({ city, places }: CitiesProps): JSX.Element {
   const [hoveredPlace, setHoveredPlace] = useHoveredPlace();
   const [sortOption, setSortOption] = useState<SortOption>('Popular');
 
-  const placesInCity = places.filter((place) => place.city.name === city.name);
-  const sortedPlaces = sortPlaces(placesInCity, sortOption);
+  const sortedPlaces = sortPlaces(places, sortOption);
 
   return (
     <div className="cities">

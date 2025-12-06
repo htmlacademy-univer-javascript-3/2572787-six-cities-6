@@ -7,11 +7,14 @@ import Header from '../../components/Header/Header';
 import { getCity } from '../../store/selectors/city-selectors';
 import { getPlaces } from '../../store/selectors/places-selectors';
 import { changeCity } from '../../store/slices/city';
+import EmptyCities from '../../components/EmptyCities/EmptyCities';
 
 function MainPage(): JSX.Element {
   const city = useAppSelector(getCity);
   const places = useAppSelector(getPlaces);
   const dispatch = useAppDispatch();
+
+  const placesInCity = places.filter((place) => place.city.name === city.name);
 
   const handleChangeCity = (cityName: string) => {
     dispatch(changeCity({ city: cityName }));
@@ -47,7 +50,11 @@ function MainPage(): JSX.Element {
             </ul>
           </section>
         </div>
-        <Cities city={city} places={places} />
+        {placesInCity.length ? (
+          <Cities city={city} places={placesInCity} />
+        ) : (
+          <EmptyCities city={city} />
+        )}
       </main>
     </div>
   );

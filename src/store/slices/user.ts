@@ -1,13 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import UserInfoType from '../../types/user-info-type';
-import { checkUserToken, loginUser, logoutUser } from '../api-actions';
+import {
+  addPlaceToFavorites,
+  checkUserToken,
+  fetchFavoritePlacesAction,
+  loginUser,
+  logoutUser,
+  removePlaceFromFavorites,
+} from '../api-actions';
+import PlaceType from '../../types/place-type';
+import { toPlaceType } from '../../helpers/place-mapper';
 
 interface UserState {
   userInfo?: UserInfoType;
+  favoritePlaces: PlaceType[];
 }
 
 const initialState: UserState = {
   userInfo: undefined,
+  favoritePlaces: [],
 };
 
 const userSlice = createSlice({
@@ -28,6 +39,22 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.userInfo = undefined;
+        state.favoritePlaces = [];
+      })
+      .addCase(fetchFavoritePlacesAction.fulfilled, (state, action) => {
+        state.favoritePlaces = action.payload || [];
+      })
+      .addCase(addPlaceToFavorites.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.favoritePlaces.push(toPlaceType(action.payload));
+        }
+      })
+      .addCase(removePlaceFromFavorites.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.favoritePlaces = state.favoritePlaces.filter(
+            (place) => place.id !== action.payload?.id,
+          );
+        }
       });
   },
 });
