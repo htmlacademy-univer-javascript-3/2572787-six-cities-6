@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import useAppSelector from '../../hooks/use-app-selector';
+import { getIsAuth } from '../../store/selectors/auth-selectors';
+import { useNavigate } from 'react-router-dom';
+import AppRoute from '../../const/app-route';
 
 type BookmarkProps = {
   block: 'place-card' | 'offer';
@@ -7,17 +11,29 @@ type BookmarkProps = {
     height: string;
   };
   inBookmarks?: boolean;
+  onBookmarkClick?: (checked: boolean) => void;
 };
 
 function Bookmark({
   block,
   bookmarkSize: { width, height },
   inBookmarks,
+  onBookmarkClick,
 }: BookmarkProps): JSX.Element {
+  const isAuth = useAppSelector(getIsAuth);
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(inBookmarks ?? false);
 
   const handleBookmarkClick = () => {
+    if (!isAuth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
     setChecked((previousChecked) => !previousChecked);
+    if (onBookmarkClick) {
+      onBookmarkClick(!checked);
+    }
   };
 
   return (

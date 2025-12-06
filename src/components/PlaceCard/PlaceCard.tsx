@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
 import PlaceType from '../../types/place-type';
 import Bookmark from '../Bookmark/Bookmark';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import {
+  addPlaceToFavorites,
+  removePlaceFromFavorites,
+} from '../../store/api-actions';
 
 type PlaceCardProps = {
   place: PlaceType;
@@ -17,6 +22,8 @@ function PlaceCard({
   imageSize,
   onCardHover,
 }: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const sizeConfig = {
     big: { width: '260px', height: '200px' },
     small: { width: '150px', height: '110px' },
@@ -37,6 +44,14 @@ function PlaceCard({
 
   const maxRating = 5;
   const ratingWidthPercentage = (rating / maxRating) * 100;
+
+  const handleBookmarkClick = (checked: boolean) => {
+    if (checked) {
+      dispatch(addPlaceToFavorites({ id }));
+    } else {
+      dispatch(removePlaceFromFavorites({ id }));
+    }
+  };
 
   return (
     <article
@@ -69,6 +84,7 @@ function PlaceCard({
             block="place-card"
             bookmarkSize={{ width: '18', height: '19' }}
             inBookmarks={isFavorite}
+            onBookmarkClick={handleBookmarkClick}
           />
         </div>
         <div className="place-card__rating rating">
