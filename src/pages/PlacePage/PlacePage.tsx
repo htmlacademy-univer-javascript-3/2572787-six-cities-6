@@ -1,23 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import AppRoute from '../../const/app-route';
 import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
-import Map from '../../components/Map/Map';
-import PlaceType from '../../types/place-type';
-import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { updateSelectedPlace } from '../../store/actions';
 import { fetchPlaceAction } from '../../store/api-actions';
-import { toPlaceType } from '../../helpers/place-mapper';
 import Spinner from '../../components/Spinner/Spinner';
 import Header from '../../components/Header/Header';
+import NearPlaces from '../../components/NearPlaces/NearPlaces';
+import { toPlaceType } from '../../helpers/place-mapper';
+import { getSelectedPlace } from '../../store/selectors/selected-place-selectors';
+import { updateSelectedPlace } from '../../store/slices/selected-place';
 
 function PlacePage(): JSX.Element {
   const { id } = useParams();
-  const place = useAppSelector((state) => state.selectedPlace);
+  const place = useAppSelector(getSelectedPlace);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -26,10 +25,6 @@ function PlacePage(): JSX.Element {
       dispatch(fetchPlaceAction({ id }));
     }
   }, [id, dispatch]);
-
-  const [selectedPlace, setSelectedPlace] = useState<PlaceType | undefined>(
-    undefined,
-  );
 
   if (place === undefined) {
     return <Spinner />;
@@ -40,17 +35,6 @@ function PlacePage(): JSX.Element {
   }
 
   const { detailedInfo, nearPlaces, reviews } = place;
-  const mappedPlace = toPlaceType(detailedInfo);
-  const places = [...nearPlaces, mappedPlace];
-
-  const handleCardHover = (hoveredPlace: PlaceType | undefined) => {
-    if (hoveredPlace) {
-      setSelectedPlace(hoveredPlace);
-      return;
-    }
-
-    setSelectedPlace(mappedPlace);
-  };
 
   if (!place) {
     return <Navigate to={AppRoute.NotFound} />;
@@ -173,26 +157,11 @@ function PlacePage(): JSX.Element {
               <Reviews reviews={reviews} />
             </div>
           </div>
-          <Map
-            city={detailedInfo.city}
-            block="offer"
-            selectedPoint={selectedPlace}
-            points={places}
-          />
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <PlaceCards
-              places={nearPlaces}
-              block="near-places"
-              cardImageSize="big"
-              onCardHover={handleCardHover}
-            />
-          </section>
-        </div>
+        <NearPlaces
+          currentPlace={toPlaceType(detailedInfo)}
+          nearPlaces={nearPlaces}
+        />
       </main>
     </div>
   );

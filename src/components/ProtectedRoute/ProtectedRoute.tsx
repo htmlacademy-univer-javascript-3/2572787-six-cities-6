@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import AuthorizationStatus from '../../const/authorization-status';
 import useAppSelector from '../../hooks/use-app-selector';
+import { getAuthorizationStatus } from '../../store/selectors/auth-selectors';
 
 type ProtectedRouteProps = {
   restrictedFor: AuthorizationStatus;
@@ -13,9 +14,7 @@ function ProtectedRoute({
   redirectTo,
   children,
 }: ProtectedRouteProps): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return authorizationStatus !== restrictedFor ? (
     children

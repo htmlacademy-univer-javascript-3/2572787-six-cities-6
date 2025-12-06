@@ -1,12 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import {
-  updateAuthorizationStatus,
-  updatePlaces,
-  updateSelectedPlace,
-  updateUserInfo,
-} from './actions';
 import ApiRoute from '../const/api-route';
 import PlaceType from '../types/place-type';
 import PlaceDetailsType from '../types/place-details-type';
@@ -14,6 +8,11 @@ import AuthInfoType from '../types/auth-info-type';
 import AuthorizationStatus from '../const/authorization-status';
 import { saveToken } from '../services/token';
 import ReviewType from '../types/review-type';
+import { getSelectedPlace } from './selectors/selected-place-selectors';
+import { updatePlaces } from './slices/places';
+import { updateSelectedPlace } from './slices/selected-place';
+import { updateAuthorizationStatus } from './slices/auth';
+import { updateUserInfo } from './slices/user';
 
 export const fetchPlacesAction = createAsyncThunk<
   void,
@@ -73,7 +72,7 @@ export const sendReview = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('data/send-review', async (review, { getState, dispatch, extra: api }) => {
-  const selectedPlace = getState().selectedPlace;
+  const selectedPlace = getSelectedPlace(getState());
 
   if (selectedPlace === undefined || selectedPlace === 'not-found') {
     return;

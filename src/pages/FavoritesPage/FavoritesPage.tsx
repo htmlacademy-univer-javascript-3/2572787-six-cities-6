@@ -2,9 +2,10 @@ import Logo from '../../components/Logo/Logo';
 import PlaceCards from '../../components/PlaceCards/PlaceCards';
 import useAppSelector from '../../hooks/use-app-selector';
 import Header from '../../components/Header/Header';
+import { getPlaces } from '../../store/selectors/places-selectors';
 
 function FavoritesPage(): JSX.Element {
-  const places = useAppSelector((state) => state.places);
+  const places = useAppSelector(getPlaces);
   const favoritePlaces = places.filter((place) => place.isFavorite);
 
   return (

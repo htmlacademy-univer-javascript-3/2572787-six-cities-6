@@ -6,6 +6,7 @@ import PlaceCards from '../PlaceCards/PlaceCards';
 import Sorting from '../Sorting/Sorting';
 import { SortOption } from '../../types/sort-options';
 import { sortPlaces } from '../../helpers/place-sort-helper';
+import useHoveredPlace from '../../hooks/use-hovered-place';
 
 type CitiesProps = {
   city: CityType;
@@ -13,9 +14,7 @@ type CitiesProps = {
 };
 
 function Cities({ city, places }: CitiesProps): JSX.Element {
-  const [hoveredPlace, setHoveredPlace] = useState<PlaceType | undefined>(
-    undefined,
-  );
+  const [hoveredPlace, setHoveredPlace] = useHoveredPlace();
   const [sortOption, setSortOption] = useState<SortOption>('Popular');
 
   const placesInCity = places.filter((place) => place.city.name === city.name);

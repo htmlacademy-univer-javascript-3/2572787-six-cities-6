@@ -4,13 +4,14 @@ import Logo from '../Logo/Logo';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { logoutUser } from '../../store/api-actions';
+import { getUserInfo } from '../../store/selectors/user-selectors';
 
 type HeaderProps = {
   showUserInfo?: boolean;
 };
 
 function Header({ showUserInfo }: HeaderProps): JSX.Element {
-  const userInfo = useAppSelector((state) => state.userInfo);
+  const userInfo = useAppSelector(getUserInfo);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
