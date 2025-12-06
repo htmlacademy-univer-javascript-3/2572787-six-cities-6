@@ -1,5 +1,5 @@
-import AuthorizationStatus from '../../const/authorization-status';
 import useAppSelector from '../../hooks/use-app-selector';
+import { getIsAuth } from '../../store/selectors/auth-selectors';
 import ReviewType from '../../types/review-type';
 import Review from '../Review/Review';
 import ReviewForm from '../ReviewForm/ReviewForm';
@@ -9,9 +9,7 @@ type ReviewsProps = {
 };
 
 function Reviews({ reviews }: ReviewsProps): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const isAuth = useAppSelector(getIsAuth);
 
   return (
     <section className="offer__reviews reviews">
@@ -26,7 +24,7 @@ function Reviews({ reviews }: ReviewsProps): JSX.Element {
           </li>
         ))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+      {isAuth && <ReviewForm />}
     </section>
   );
 }

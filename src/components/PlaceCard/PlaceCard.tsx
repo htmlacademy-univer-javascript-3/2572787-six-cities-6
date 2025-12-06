@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
 import PlaceType from '../../types/place-type';
@@ -85,4 +86,5 @@ function PlaceCard({
   );
 }
 
-export default PlaceCard;
+const MemoizedPlaceCard = memo(PlaceCard);
+export default MemoizedPlaceCard;

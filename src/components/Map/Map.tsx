@@ -55,13 +55,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, points, selectedPoint]);
 
-  return (
-    <section
-      className={`${block}__map map`}
-      style={{ height: '500px' }}
-      ref={mapRef}
-    />
-  );
+  return <section className={`${block}__map map`} ref={mapRef} />;
 }
 
 export default Map;
