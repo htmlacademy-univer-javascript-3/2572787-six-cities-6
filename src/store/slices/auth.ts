@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import AuthorizationStatus from '../../const/authorization-status';
+import { checkUserToken, loginUser, logoutUser } from '../api-actions';
 
 interface AuthState {
   authorizationStatus: AuthorizationStatus;
@@ -19,6 +20,24 @@ const authSlice = createSlice({
     ) => {
       state.authorizationStatus = action.payload.status;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(checkUserToken.fulfilled, (state, action) => {
+        state.authorizationStatus =
+          action.payload === null
+            ? AuthorizationStatus.NoAuth
+            : AuthorizationStatus.Auth;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.authorizationStatus =
+          action.payload === null
+            ? AuthorizationStatus.NoAuth
+            : AuthorizationStatus.Auth;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
+      });
   },
 });
 

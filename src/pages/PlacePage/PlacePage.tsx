@@ -11,34 +11,34 @@ import Spinner from '../../components/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 import NearPlaces from '../../components/NearPlaces/NearPlaces';
 import { toPlaceType } from '../../helpers/place-mapper';
-import { getSelectedPlace } from '../../store/selectors/selected-place-selectors';
-import { updateSelectedPlace } from '../../store/slices/selected-place';
+import {
+  getSelectedPlace,
+  isPlaceLoading,
+  isPlaceNotFound,
+} from '../../store/selectors/selected-place-selectors';
 
 function PlacePage(): JSX.Element {
   const { id } = useParams();
   const place = useAppSelector(getSelectedPlace);
+  const isLoading = useAppSelector(isPlaceLoading);
+  const isNotFound = useAppSelector(isPlaceNotFound);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(updateSelectedPlace({ place: undefined }));
     if (id) {
       dispatch(fetchPlaceAction({ id }));
     }
   }, [id, dispatch]);
 
-  if (place === undefined) {
+  if (isNotFound) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
+
+  if (isLoading || !place) {
     return <Spinner />;
   }
 
-  if (place === 'not-found') {
-    return <Navigate to={AppRoute.NotFound} />;
-  }
-
   const { detailedInfo, nearPlaces, reviews } = place;
-
-  if (!place) {
-    return <Navigate to={AppRoute.NotFound} />;
-  }
 
   const maxRating = 5;
   const ratingWidthPercentage = (detailedInfo.rating / maxRating) * 100;

@@ -5,37 +5,41 @@ import ApiRoute from '../const/api-route';
 import PlaceType from '../types/place-type';
 import PlaceDetailsType from '../types/place-details-type';
 import AuthInfoType from '../types/auth-info-type';
-import AuthorizationStatus from '../const/authorization-status';
 import { saveToken } from '../services/token';
 import ReviewType from '../types/review-type';
 import { getSelectedPlace } from './selectors/selected-place-selectors';
-import { updatePlaces } from './slices/places';
-import { updateSelectedPlace } from './slices/selected-place';
-import { updateAuthorizationStatus } from './slices/auth';
-import { updateUserInfo } from './slices/user';
+import UserInfoType from '../types/user-info-type';
 
 export const fetchPlacesAction = createAsyncThunk<
-  void,
+  PlaceType[] | null,
   undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchPlaces', async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<PlaceType[]>(ApiRoute.Offers);
-  dispatch(updatePlaces({ places: data }));
+>('data/fetchPlaces', async (_arg, { extra: api }) => {
+  try {
+    const { data } = await api.get<PlaceType[]>(ApiRoute.Offers);
+    return data;
+  } catch {
+    return null;
+  }
 });
 
 export const fetchPlaceAction = createAsyncThunk<
-  void,
+  {
+    detailedInfo: PlaceDetailsType;
+    nearPlaces: PlaceType[];
+    reviews: ReviewType[];
+  } | null,
   { id: string },
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('data/fetchPlace', async ({ id }, { dispatch, extra: api }) => {
+>('data/fetchPlace', async ({ id }, { extra: api }) => {
   try {
     const { data: detailedInfo } = await api.get<PlaceDetailsType>(
       `${ApiRoute.Offers}/${id}`,
@@ -46,22 +50,18 @@ export const fetchPlaceAction = createAsyncThunk<
     const { data: reviews } = await api.get<ReviewType[]>(
       `${ApiRoute.Reviews}/${id}`,
     );
-    dispatch(
-      updateSelectedPlace({
-        place: {
-          detailedInfo,
-          nearPlaces: nearPlaces.slice(0, 3),
-          reviews,
-        },
-      }),
-    );
+    return {
+      detailedInfo,
+      nearPlaces: nearPlaces.slice(0, 3),
+      reviews,
+    };
   } catch {
-    dispatch(updateSelectedPlace({ place: 'not-found' }));
+    return null;
   }
 });
 
 export const sendReview = createAsyncThunk<
-  void,
+  ReviewType | null,
   {
     comment: string;
     rating: number;
@@ -71,55 +71,39 @@ export const sendReview = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('data/send-review', async (review, { getState, dispatch, extra: api }) => {
+>('data/send-review', async (review, { getState, extra: api }) => {
   const selectedPlace = getSelectedPlace(getState());
 
-  if (selectedPlace === undefined || selectedPlace === 'not-found') {
-    return;
+  if (!selectedPlace) {
+    return null;
   }
 
   const { data: newReview } = await api.post<ReviewType>(
     `${ApiRoute.Reviews}/${selectedPlace.detailedInfo.id}`,
     review,
   );
-  dispatch(
-    updateSelectedPlace({
-      place: {
-        ...selectedPlace,
-        reviews: selectedPlace.reviews.concat(newReview),
-      },
-    }),
-  );
+  return newReview;
 });
 
 export const checkUserToken = createAsyncThunk<
-  void,
+  UserInfoType | null,
   undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('auth/login', async (_arg, { dispatch, extra: api }) => {
+>('auth/check-token', async (_arg, { extra: api }) => {
   try {
     const { data: authInfo } = await api.get<AuthInfoType>(ApiRoute.Login);
-    dispatch(
-      updateAuthorizationStatus({
-        status: AuthorizationStatus.Auth,
-      }),
-    );
-    dispatch(updateUserInfo({ info: authInfo }));
+    return authInfo;
   } catch {
-    dispatch(
-      updateAuthorizationStatus({
-        status: AuthorizationStatus.NoAuth,
-      }),
-    );
+    return null;
   }
 });
 
 export const loginUser = createAsyncThunk<
-  void,
+  UserInfoType | null,
   {
     email: string;
     password: string;
@@ -129,25 +113,16 @@ export const loginUser = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('auth/login', async (authData, { dispatch, extra: api }) => {
+>('auth/login', async (authData, { extra: api }) => {
   try {
     const { data: authInfo } = await api.post<AuthInfoType>(
       ApiRoute.Login,
       authData,
     );
     saveToken(authInfo.token);
-    dispatch(
-      updateAuthorizationStatus({
-        status: AuthorizationStatus.Auth,
-      }),
-    );
-    dispatch(updateUserInfo({ info: authInfo }));
+    return authInfo;
   } catch {
-    dispatch(
-      updateAuthorizationStatus({
-        status: AuthorizationStatus.NoAuth,
-      }),
-    );
+    return null;
   }
 });
 
@@ -159,12 +134,6 @@ export const logoutUser = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('auth/login', async (_arg, { dispatch, extra: api }) => {
+>('auth/logout', async (_arg, { extra: api }) => {
   await api.delete(ApiRoute.Logout);
-  dispatch(
-    updateAuthorizationStatus({
-      status: AuthorizationStatus.NoAuth,
-    }),
-  );
-  dispatch(updateUserInfo({ info: undefined }));
 });

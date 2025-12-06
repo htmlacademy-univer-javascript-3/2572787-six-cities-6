@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import UserInfoType from '../../types/user-info-type';
+import { checkUserToken, loginUser, logoutUser } from '../api-actions';
 
 interface UserState {
   userInfo?: UserInfoType;
@@ -16,6 +17,18 @@ const userSlice = createSlice({
     updateUserInfo: (state, action: PayloadAction<{ info?: UserInfoType }>) => {
       state.userInfo = action.payload.info;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(checkUserToken.fulfilled, (state, action) => {
+        state.userInfo = action.payload || undefined;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload || undefined;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.userInfo = undefined;
+      });
   },
 });
 
