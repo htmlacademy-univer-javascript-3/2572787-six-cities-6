@@ -6,7 +6,11 @@ import Bookmark from '../../components/Bookmark/Bookmark';
 import Reviews from '../../components/Reviews/Reviews';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { fetchPlaceAction } from '../../store/api-actions';
+import {
+  addPlaceToFavorites,
+  fetchPlaceAction,
+  removePlaceFromFavorites,
+} from '../../store/api-actions';
 import Spinner from '../../components/Spinner/Spinner';
 import Header from '../../components/Header/Header';
 import NearPlaces from '../../components/NearPlaces/NearPlaces';
@@ -16,6 +20,7 @@ import {
   isPlaceLoading,
   isPlaceNotFound,
 } from '../../store/selectors/selected-place-selectors';
+import { markAsNotFound } from '../../store/slices/selected-place';
 
 function PlacePage(): JSX.Element {
   const { id } = useParams();
@@ -27,6 +32,8 @@ function PlacePage(): JSX.Element {
   useEffect(() => {
     if (id) {
       dispatch(fetchPlaceAction({ id }));
+    } else {
+      dispatch(markAsNotFound());
     }
   }, [id, dispatch]);
 
@@ -39,6 +46,14 @@ function PlacePage(): JSX.Element {
   }
 
   const { detailedInfo, nearPlaces, reviews } = place;
+
+  const handleBookmarkClick = (checked: boolean) => {
+    if (checked) {
+      dispatch(addPlaceToFavorites(detailedInfo));
+    } else {
+      dispatch(removePlaceFromFavorites(detailedInfo));
+    }
+  };
 
   const maxRating = 5;
   const ratingWidthPercentage = (detailedInfo.rating / maxRating) * 100;
@@ -77,6 +92,7 @@ function PlacePage(): JSX.Element {
                   block="offer"
                   bookmarkSize={{ width: '31', height: '33' }}
                   inBookmarks={detailedInfo.isFavorite}
+                  onBookmarkClick={handleBookmarkClick}
                 />
               </div>
               <div className="offer__rating rating">

@@ -8,7 +8,11 @@ import PlacePage from '../../pages/PlacePage/PlacePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AuthorizationStatus from '../../const/authorization-status';
-import { checkUserToken, fetchPlacesAction } from '../../store/api-actions';
+import {
+  checkUserToken,
+  fetchFavoritePlacesAction,
+  fetchPlacesAction,
+} from '../../store/api-actions';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 
 function App(): JSX.Element {
@@ -17,6 +21,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkUserToken());
     dispatch(fetchPlacesAction());
+    dispatch(fetchFavoritePlacesAction());
   }, [dispatch]);
 
   return (

@@ -4,7 +4,10 @@ import Logo from '../Logo/Logo';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { logoutUser } from '../../store/api-actions';
-import { getUserInfo } from '../../store/selectors/user-selectors';
+import {
+  getFavoritePlaces,
+  getUserInfo,
+} from '../../store/selectors/user-selectors';
 
 type HeaderProps = {
   showUserInfo?: boolean;
@@ -12,6 +15,7 @@ type HeaderProps = {
 
 function Header({ showUserInfo }: HeaderProps): JSX.Element {
   const userInfo = useAppSelector(getUserInfo);
+  const favoritePlacesCount = useAppSelector(getFavoritePlaces).length;
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -47,7 +51,9 @@ function Header({ showUserInfo }: HeaderProps): JSX.Element {
                         <span className="header__user-name user__name">
                           {userInfo.email}
                         </span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__favorite-count">
+                          {favoritePlacesCount}
+                        </span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

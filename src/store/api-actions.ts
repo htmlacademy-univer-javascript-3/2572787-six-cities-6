@@ -85,6 +85,63 @@ export const sendReview = createAsyncThunk<
   return newReview;
 });
 
+export const fetchFavoritePlacesAction = createAsyncThunk<
+  PlaceType[] | null,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetch-favorite-places', async (_arg, { extra: api }) => {
+  try {
+    const { data: favoritePlaces } = await api.get<PlaceType[]>(
+      ApiRoute.Favorite,
+    );
+    return favoritePlaces;
+  } catch {
+    return null;
+  }
+});
+
+export const removePlaceFromFavorites = createAsyncThunk<
+  PlaceDetailsType | null,
+  { id: string },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/remove-from-favorites', async ({ id }, { extra: api }) => {
+  try {
+    const { data: detailedInfo } = await api.post<PlaceDetailsType>(
+      `${ApiRoute.Favorite}/${id}/0`,
+    );
+    return detailedInfo;
+  } catch {
+    return null;
+  }
+});
+
+export const addPlaceToFavorites = createAsyncThunk<
+  PlaceDetailsType | null,
+  { id: string },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/add-to-favorites', async ({ id }, { extra: api }) => {
+  try {
+    const { data: detailedInfo } = await api.post<PlaceDetailsType>(
+      `${ApiRoute.Favorite}/${id}/1`,
+    );
+    return detailedInfo;
+  } catch {
+    return null;
+  }
+});
+
 export const checkUserToken = createAsyncThunk<
   UserInfoType | null,
   undefined,
