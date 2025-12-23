@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Reviews from './Reviews';
-import { mockReview } from '../../test-utils.ts/mocks';
-import { withStore } from '../../test-utils.ts/mock-components';
+import { mockReview } from '../../test-utils/mocks';
+import { withStore } from '../../test-utils/mock-components';
 import AuthorizationStatus from '../../const/authorization-status';
 
 vi.mock('../ReviewForm/ReviewForm', () => ({

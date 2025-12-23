@@ -1,14 +1,14 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReviewForm from './ReviewForm';
-import { withStore } from '../../test-utils.ts/mock-components';
+import { withStore } from '../../test-utils/mock-components';
 import { lorem } from 'faker';
 import { sendReview } from '../../store/api-actions';
 import {
   extractActionsTypes,
   mockPlaceDetails,
   mockReview,
-} from '../../test-utils.ts/mocks';
+} from '../../test-utils/mocks';
 import ApiRoute from '../../const/api-route';
 
 describe('ReviewForm', () => {

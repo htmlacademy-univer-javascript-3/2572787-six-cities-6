@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import PlaceCard from './PlaceCard';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
-import { extractActionsTypes, mockPlace } from '../../test-utils.ts/mocks';
+import { withHistory, withStore } from '../../test-utils/mock-components';
+import { extractActionsTypes, mockPlace } from '../../test-utils/mocks';
 import AuthorizationStatus from '../../const/authorization-status';
 import AppRoute from '../../const/app-route';
 import userEvent from '@testing-library/user-event';

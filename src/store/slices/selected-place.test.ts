@@ -2,7 +2,7 @@ import {
   mockPlace,
   mockPlaceDetails,
   mockReview,
-} from '../../test-utils.ts/mocks';
+} from '../../test-utils/mocks';
 import { fetchPlaceAction, sendReview } from '../api-actions';
 import selectedPlace, {
   clearSelectedPlace,

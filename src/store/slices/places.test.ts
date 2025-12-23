@@ -1,4 +1,4 @@
-import { mockPlace } from '../../test-utils.ts/mocks';
+import { mockPlace } from '../../test-utils/mocks';
 import { fetchPlacesAction } from '../api-actions';
 import places, { updatePlaces } from './places';
 

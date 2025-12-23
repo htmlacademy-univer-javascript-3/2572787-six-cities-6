@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import NotFoundPage from './NotFoundPage';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
+import { withHistory, withStore } from '../../test-utils/mock-components';
 
 vi.mock('../../components/Header/Header', () => ({
   default: () => <header>Header</header>,

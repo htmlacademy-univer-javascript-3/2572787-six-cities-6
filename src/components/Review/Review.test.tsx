@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Review from './Review';
-import { mockReview } from '../../test-utils.ts/mocks';
+import { mockReview } from '../../test-utils/mocks';
 
 describe('Review', () => {
   const review = mockReview();

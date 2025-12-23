@@ -1,4 +1,4 @@
-import { mockPlace } from '../../test-utils.ts/mocks';
+import { mockPlace } from '../../test-utils/mocks';
 import { getPlaces } from './places-selectors';
 
 describe('Places selectors', () => {
