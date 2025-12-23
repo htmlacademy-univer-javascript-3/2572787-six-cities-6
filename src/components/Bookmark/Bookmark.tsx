@@ -3,6 +3,7 @@ import useAppSelector from '../../hooks/use-app-selector';
 import { getIsAuth } from '../../store/selectors/auth-selectors';
 import { useNavigate } from 'react-router-dom';
 import AppRoute from '../../const/app-route';
+import classNames from 'classnames';
 
 type BookmarkProps = {
   block: 'place-card' | 'offer';
@@ -36,9 +37,12 @@ function Bookmark({
     }
   };
 
+  const bookmarkActiveClass = `${block}__bookmark-button--active`;
   return (
     <button
-      className={`${block}__bookmark-button ${checked ? `${block}__bookmark-button--active` : ''} button`}
+      className={classNames(`${block}__bookmark-button`, 'button', {
+        [bookmarkActiveClass]: checked,
+      })}
       type="button"
       onClick={handleBookmarkClick}
     >

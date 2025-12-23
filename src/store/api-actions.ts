@@ -5,7 +5,7 @@ import ApiRoute from '../const/api-route';
 import PlaceType from '../types/place-type';
 import PlaceDetailsType from '../types/place-details-type';
 import AuthInfoType from '../types/auth-info-type';
-import { saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 import ReviewType from '../types/review-type';
 import { getSelectedPlace } from './selectors/selected-place-selectors';
 import UserInfoType from '../types/user-info-type';
@@ -193,4 +193,5 @@ export const logoutUser = createAsyncThunk<
   }
 >('auth/logout', async (_arg, { extra: api }) => {
   await api.delete(ApiRoute.Logout);
+  dropToken();
 });
