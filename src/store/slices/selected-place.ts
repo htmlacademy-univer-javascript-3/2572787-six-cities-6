@@ -33,14 +33,17 @@ const selectedPlaceSlice = createSlice({
       }>,
     ) => {
       state.selectedPlace = action.payload.place;
+      state.isLoading = false;
       state.isNotFound = !action.payload.place;
     },
     clearSelectedPlace: (state) => {
       state.selectedPlace = undefined;
+      state.isLoading = false;
       state.isNotFound = false;
     },
     markAsNotFound: (state) => {
       state.selectedPlace = undefined;
+      state.isLoading = false;
       state.isNotFound = true;
     },
   },
