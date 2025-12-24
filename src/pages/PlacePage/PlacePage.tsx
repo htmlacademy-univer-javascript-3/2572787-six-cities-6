@@ -57,8 +57,8 @@ function PlacePage(): JSX.Element {
 
   const maxRating = 5;
   const ratingWidthPercentage = (detailedInfo.rating / maxRating) * 100;
-  const reviewOnDisplay = reviews
-    .toSorted((a, b) =>
+  const reviewOnDisplay = [...reviews]
+    .sort((a, b) =>
       Math.sign(new Date(b.date).getTime() - new Date(a.date).getTime()),
     )
     .slice(0, 10);
