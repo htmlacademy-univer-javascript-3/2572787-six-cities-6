@@ -3,7 +3,12 @@ import { MemoryHistory, createMemoryHistory } from 'history';
 import PlacePage from './PlacePage';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 import AppRoute from '../../const/app-route';
-import { mockPlace, mockPlaceDetails, mockReview, mockUserInfo } from '../../test-utils/mocks';
+import {
+  mockPlace,
+  mockPlaceDetails,
+  mockReview,
+  mockUserInfo,
+} from '../../test-utils/mocks';
 import AuthorizationStatus from '../../const/authorization-status';
 
 vi.mock('../../components/Spinner/Spinner', () => {
@@ -39,23 +44,20 @@ describe('PlacePage basic states', () => {
 
   it('shows loading spinner when loading', () => {
     const componentWithHistory = withHistory(<PlacePage />, mockHistory);
-    const { withStoreComponent } = withStore(
-      componentWithHistory,
-      {
-        selectedPlace: {
-          selectedPlace: undefined,
-          isLoading: true,
-          isNotFound: false,
-        },
-        user: {
-          userInfo: mockUserInfo(),
-          favoritePlaces: []
-        },
-        auth: {
-          authorizationStatus: AuthorizationStatus.Auth,
-        },
-      }
-    );
+    const { withStoreComponent } = withStore(componentWithHistory, {
+      selectedPlace: {
+        selectedPlace: undefined,
+        isLoading: true,
+        isNotFound: false,
+      },
+      user: {
+        userInfo: mockUserInfo(),
+        favoritePlaces: [],
+      },
+      auth: {
+        authorizationStatus: AuthorizationStatus.Auth,
+      },
+    });
     const expectedText = 'Loading...';
 
     render(withStoreComponent);
@@ -65,23 +67,20 @@ describe('PlacePage basic states', () => {
 
   it('redirects to "/not-found" when place not found', () => {
     const componentWithHistory = withHistory(<PlacePage />, mockHistory);
-    const { withStoreComponent } = withStore(
-      componentWithHistory,
-      {
-        selectedPlace: {
-          selectedPlace: undefined,
-          isLoading: false,
-          isNotFound: true,
-        },
-        user: {
-          userInfo: mockUserInfo(),
-          favoritePlaces: []
-        },
-        auth: {
-          authorizationStatus: AuthorizationStatus.Auth,
-        },
-      }
-    );
+    const { withStoreComponent } = withStore(componentWithHistory, {
+      selectedPlace: {
+        selectedPlace: undefined,
+        isLoading: false,
+        isNotFound: true,
+      },
+      user: {
+        userInfo: mockUserInfo(),
+        favoritePlaces: [],
+      },
+      auth: {
+        authorizationStatus: AuthorizationStatus.Auth,
+      },
+    });
 
     render(withStoreComponent);
 
@@ -91,27 +90,24 @@ describe('PlacePage basic states', () => {
   it('renders place when found and loaded', () => {
     const mockedPlace = mockPlaceDetails();
     const componentWithHistory = withHistory(<PlacePage />, mockHistory);
-    const { withStoreComponent } = withStore(
-      componentWithHistory,
-      {
+    const { withStoreComponent } = withStore(componentWithHistory, {
+      selectedPlace: {
         selectedPlace: {
-          selectedPlace: {
-            detailedInfo: mockedPlace,
-            nearPlaces: [mockPlace()],
-            reviews: [mockReview()]
-          },
-          isLoading: false,
-          isNotFound: false,
+          detailedInfo: mockedPlace,
+          nearPlaces: [mockPlace()],
+          reviews: [mockReview()],
         },
-        user: {
-          userInfo: mockUserInfo(),
-          favoritePlaces: []
-        },
-        auth: {
-          authorizationStatus: AuthorizationStatus.Auth,
-        },
-      }
-    );
+        isLoading: false,
+        isNotFound: false,
+      },
+      user: {
+        userInfo: mockUserInfo(),
+        favoritePlaces: [],
+      },
+      auth: {
+        authorizationStatus: AuthorizationStatus.Auth,
+      },
+    });
 
     render(withStoreComponent);
 
