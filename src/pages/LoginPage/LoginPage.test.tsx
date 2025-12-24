@@ -2,8 +2,8 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import LoginPage from './LoginPage';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
-import { extractActionsTypes } from '../../test-utils.ts/mocks';
+import { withHistory, withStore } from '../../test-utils/mock-components';
+import { extractActionsTypes } from '../../test-utils/mocks';
 import { fetchFavoritePlacesAction, loginUser } from '../../store/api-actions';
 
 vi.mock('../../components/Logo/Logo', () => ({

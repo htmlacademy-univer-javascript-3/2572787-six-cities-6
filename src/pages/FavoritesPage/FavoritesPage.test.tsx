@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import FavoritesPage from './FavoritesPage';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
-import { mockPlace } from '../../test-utils.ts/mocks';
+import { withHistory, withStore } from '../../test-utils/mock-components';
+import { mockPlace } from '../../test-utils/mocks';
 import AuthorizationStatus from '../../const/authorization-status';
 
 vi.mock('../../components/Logo/Logo', () => ({

@@ -1,5 +1,5 @@
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
+import { withHistory, withStore } from '../../test-utils/mock-components';
 import Bookmark from './Bookmark';
 import { render, screen } from '@testing-library/react';
 import AuthorizationStatus from '../../const/authorization-status';

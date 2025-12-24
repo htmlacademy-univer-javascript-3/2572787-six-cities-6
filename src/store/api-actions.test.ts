@@ -24,7 +24,7 @@ import {
   mockPlaceDetails,
   mockReview,
   mockUserCredentialsInfo,
-} from '../test-utils.ts/mocks';
+} from '../test-utils/mocks';
 import * as tokenStorage from '../services/token';
 
 describe('Async actions', () => {

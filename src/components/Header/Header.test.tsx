@@ -1,8 +1,8 @@
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
+import { withHistory, withStore } from '../../test-utils/mock-components';
 import Header from './Header';
 import { render, screen } from '@testing-library/react';
-import { mockUserInfo } from '../../test-utils.ts/mocks';
+import { mockUserInfo } from '../../test-utils/mocks';
 import userEvent from '@testing-library/user-event';
 import AppRoute from '../../const/app-route';
 

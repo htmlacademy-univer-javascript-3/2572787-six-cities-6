@@ -2,7 +2,7 @@ import {
   mockPlace,
   mockPlaceDetails,
   mockReview,
-} from '../../test-utils.ts/mocks';
+} from '../../test-utils/mocks';
 import {
   getSelectedPlace,
   isPlaceLoading,

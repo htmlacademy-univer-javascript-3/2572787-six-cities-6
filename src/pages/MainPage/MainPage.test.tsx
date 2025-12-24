@@ -2,9 +2,9 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import MainPage from './MainPage';
-import { withHistory, withStore } from '../../test-utils.ts/mock-components';
+import { withHistory, withStore } from '../../test-utils/mock-components';
 import cities from '../../mocks/cities';
-import { extractActionsTypes, mockPlace } from '../../test-utils.ts/mocks';
+import { extractActionsTypes, mockPlace } from '../../test-utils/mocks';
 import { changeCity } from '../../store/slices/city';
 
 vi.mock('../../components/Header/Header', () => ({

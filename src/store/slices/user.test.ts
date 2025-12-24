@@ -4,7 +4,7 @@ import {
   mockPlaceDetails,
   mockUserCredentialsInfo,
   mockUserInfo,
-} from '../../test-utils.ts/mocks';
+} from '../../test-utils/mocks';
 import {
   addPlaceToFavorites,
   checkUserToken,

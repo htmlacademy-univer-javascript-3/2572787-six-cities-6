@@ -4,7 +4,7 @@ import { checkUserToken, loginUser, logoutUser } from '../api-actions';
 import {
   mockUserCredentialsInfo,
   mockUserInfo,
-} from '../../test-utils.ts/mocks';
+} from '../../test-utils/mocks';
 
 describe('Auth Slice', () => {
   it('should return initial state with empty action', () => {
