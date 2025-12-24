@@ -57,6 +57,11 @@ function PlacePage(): JSX.Element {
 
   const maxRating = 5;
   const ratingWidthPercentage = (detailedInfo.rating / maxRating) * 100;
+  const reviewOnDisplay = reviews
+    .toSorted((a, b) =>
+      Math.sign(new Date(b.date).getTime() - new Date(a.date).getTime()),
+    )
+    .slice(0, 10);
 
   return (
     <div className="page">
@@ -170,7 +175,7 @@ function PlacePage(): JSX.Element {
                   ))}
                 </div>
               </div>
-              <Reviews reviews={reviews} />
+              <Reviews reviews={reviewOnDisplay} />
             </div>
           </div>
         </section>

@@ -1,7 +1,7 @@
 import { MemoryHistory, createMemoryHistory } from 'history';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 import Header from './Header';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { mockUserInfo } from '../../test-utils/mocks';
 import userEvent from '@testing-library/user-event';
 import AppRoute from '../../const/app-route';
@@ -85,7 +85,9 @@ describe('Header', () => {
     const expectedRoute = AppRoute.Login;
 
     render(withStoreComponent);
-    await userEvent.click(screen.getAllByRole('link')[1]);
+    await act(async () => {
+      await userEvent.click(screen.getAllByRole('link')[1]);
+    });
 
     expect(mockHistory.location.pathname).toEqual(expectedRoute);
   });
@@ -104,7 +106,9 @@ describe('Header', () => {
     const expectedRoute = AppRoute.Favorites;
 
     render(withStoreComponent);
-    await userEvent.click(screen.getAllByRole('link')[1]);
+    await act(async () => {
+      await userEvent.click(screen.getAllByRole('link')[1]);
+    });
 
     expect(mockHistory.location.pathname).toEqual(expectedRoute);
   });

@@ -19,7 +19,7 @@ describe('FavoritesPage', () => {
     const componentWithHistory = withHistory(<FavoritesPage />, mockHistory);
     const { withStoreComponent } = withStore(componentWithHistory, {
       user: {
-        favoritePlaces: [],
+        favoritePlaces: [mockPlace()],
       },
       auth: {
         authorizationStatus: AuthorizationStatus.Auth,

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from './HistoryRouter';
 
@@ -33,7 +33,9 @@ describe('HistoryRouter', () => {
 
     expect(screen.getByTestId('location')).toHaveTextContent(initialPath);
 
-    history.push(newPath);
+    act(() => {
+      history.push(newPath);
+    });
 
     rerender(<TestComponent />);
 

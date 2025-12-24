@@ -63,7 +63,10 @@ describe('ReviewForm', () => {
 
     await act(async () => {
       await userEvent.click(screen.getAllByRole('radio')[3]);
-      await userEvent.type(screen.getByRole('textbox'), lorem.paragraphs(3));
+      await userEvent.type(screen.getByRole('textbox'), lorem.paragraph());
+    });
+
+    await act(async () => {
       await userEvent.click(screen.getByRole('button'));
     });
 

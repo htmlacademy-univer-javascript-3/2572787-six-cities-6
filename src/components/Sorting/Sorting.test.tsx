@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Sorting from './Sorting';
 import { sortOptions } from '../../types/sort-options';
@@ -26,10 +26,14 @@ describe('Sorting', () => {
       />,
     );
 
-    await userEvent.click(screen.getAllByText(defaultOption)[0]);
+    await act(async () => {
+      await userEvent.click(screen.getAllByText(defaultOption)[0]);
+    });
     expect(screen.getByRole('list')).toHaveClass('places__options--opened');
 
-    await userEvent.click(screen.getByText(sortOptions[1]));
+    await act(async () => {
+      await userEvent.click(screen.getByText(sortOptions[1]));
+    });
     expect(screen.getByRole('list')).not.toHaveClass('places__options--opened');
   });
 
@@ -42,8 +46,12 @@ describe('Sorting', () => {
     );
     const expectedOption = sortOptions[1];
 
-    await userEvent.click(screen.getAllByText(defaultOption)[0]);
-    await userEvent.click(screen.getByText(expectedOption));
+    await act(async () => {
+      await userEvent.click(screen.getAllByText(defaultOption)[0]);
+    });
+    await act(async () => {
+      await userEvent.click(screen.getByText(expectedOption));
+    });
 
     expect(mockOnSortChange).toHaveBeenCalledWith(expectedOption);
   });
@@ -56,7 +64,9 @@ describe('Sorting', () => {
       />,
     );
 
-    await userEvent.click(screen.getAllByText(defaultOption)[0]);
+    await act(async () => {
+      await userEvent.click(screen.getAllByText(defaultOption)[0]);
+    });
 
     expect(screen.getAllByRole('listitem')).toHaveLength(sortOptions.length);
   });

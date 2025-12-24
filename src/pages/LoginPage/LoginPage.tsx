@@ -1,9 +1,11 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
 import AppRoute from '../../const/app-route';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { fetchFavoritePlacesAction, loginUser } from '../../store/api-actions';
+import cityNames from '../../const/cities';
+import { changeCity } from '../../store/slices/city';
 
 function LoginPage(): JSX.Element {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ function LoginPage(): JSX.Element {
   });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const city = useRef(cityNames[Math.floor(Math.random() * cityNames.length)]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,6 +29,12 @@ function LoginPage(): JSX.Element {
     e.preventDefault();
     dispatch(loginUser(formData));
     dispatch(fetchFavoritePlacesAction());
+    navigate(AppRoute.Main);
+  };
+
+  const handleCityClick = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(changeCity({ city: city.current }));
     navigate(AppRoute.Main);
   };
 
@@ -77,8 +87,8 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href={AppRoute.Main}>
-                <span>Amsterdam</span>
+              <a className="locations__item-link" onClick={handleCityClick}>
+                <span>{city.current}</span>
               </a>
             </div>
           </section>
