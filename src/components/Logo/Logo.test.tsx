@@ -1,7 +1,7 @@
 import { MemoryHistory, createMemoryHistory } from 'history';
 import { withHistory } from '../../test-utils/mock-components';
 import Logo from './Logo';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AppRoute from '../../const/app-route';
 
@@ -28,7 +28,9 @@ describe('Logo', () => {
     const expectedRoute = AppRoute.Main;
 
     render(componentWithHistory);
-    await userEvent.click(screen.getByRole('link'));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('link'));
+    });
 
     expect(mockHistory.location.pathname).toEqual(expectedRoute);
   });

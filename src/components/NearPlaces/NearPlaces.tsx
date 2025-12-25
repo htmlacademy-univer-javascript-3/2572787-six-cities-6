@@ -1,7 +1,6 @@
 import Map from '../Map/Map';
 import PlaceCards from '../PlaceCards/PlaceCards';
 import PlaceType from '../../types/place-type';
-import useHoveredPlace from '../../hooks/use-hovered-place';
 
 type NearPlacesProps = {
   currentPlace: PlaceType;
@@ -13,14 +12,13 @@ function NearPlaces({
   nearPlaces,
 }: NearPlacesProps): JSX.Element {
   const places = [...nearPlaces, currentPlace];
-  const [hoveredPlace, handleHover] = useHoveredPlace(currentPlace);
 
   return (
     <>
       <Map
         city={currentPlace.city}
         block="offer"
-        selectedPoint={hoveredPlace}
+        selectedPoint={currentPlace}
         points={places}
       />
       <div className="container">
@@ -32,7 +30,6 @@ function NearPlaces({
             places={nearPlaces}
             block="near-places"
             cardImageSize="big"
-            onCardHover={handleHover}
           />
         </section>
       </div>

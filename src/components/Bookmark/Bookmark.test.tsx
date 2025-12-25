@@ -1,7 +1,7 @@
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 import Bookmark from './Bookmark';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import AuthorizationStatus from '../../const/authorization-status';
 import userEvent from '@testing-library/user-event';
 import AppRoute from '../../const/app-route';
@@ -77,7 +77,9 @@ describe('Bookmark', () => {
 
     render(withStoreComponent);
     expect(screen.getByText('In bookmarks')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button'));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button'));
+    });
 
     expect(screen.queryByText('In bookmarks')).not.toBeInTheDocument();
     expect(screen.getByText('To bookmarks')).toBeInTheDocument();
@@ -99,7 +101,9 @@ describe('Bookmark', () => {
     });
 
     render(withStoreComponent);
-    await userEvent.click(screen.getByRole('button'));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button'));
+    });
 
     expect(mockCallback).toHaveBeenCalled();
     expect(mockCallback).toHaveBeenNthCalledWith(1, false);
@@ -122,7 +126,9 @@ describe('Bookmark', () => {
     const expectedRoute = AppRoute.Login;
 
     render(withStoreComponent);
-    await userEvent.click(screen.getByRole('button'));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button'));
+    });
 
     expect(mockHistory.location.pathname).toEqual(expectedRoute);
   });
