@@ -10,13 +10,15 @@ function useMap(
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
           lng: city.location.longitude,
         },
-        zoom: 10,
+        zoom: city.location.zoom,
       });
 
       const layer = new TileLayer(
@@ -29,10 +31,36 @@ function useMap(
 
       instance.addLayer(layer);
 
-      setMap(instance);
-      isRenderedRef.current = true;
+      if (isMounted) {
+        setMap(instance);
+        isRenderedRef.current = true;
+      } else {
+        instance.remove();
+      }
     }
-  }, [mapRef, city]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [mapRef, map, city]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (map && isMounted) {
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
+        },
+        city.location.zoom,
+      );
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [map, city]);
 
   return map;
 }

@@ -25,14 +25,14 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-function Map(props: MapProps): JSX.Element {
-  const { city, block, points, selectedPoint } = props;
-
+function Map({ city, block, points, selectedPoint }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    if (map) {
+    let isMounted = true;
+
+    if (map && isMounted) {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -50,9 +50,14 @@ function Map(props: MapProps): JSX.Element {
       });
 
       return () => {
+        isMounted = false;
         map.removeLayer(markerLayer);
       };
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [map, points, selectedPoint]);
 
   return <section className={`${block}__map map`} ref={mapRef} />;
