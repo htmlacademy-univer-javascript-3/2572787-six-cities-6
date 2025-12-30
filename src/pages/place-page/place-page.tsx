@@ -30,11 +30,19 @@ function PlacePage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchPlaceAction({ id }));
-    } else {
-      dispatch(markAsNotFound());
+    let isMounted = true;
+
+    if (isMounted) {
+      if (id) {
+        dispatch(fetchPlaceAction({ id }));
+      } else {
+        dispatch(markAsNotFound());
+      }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [id, dispatch]);
 
   if (isNotFound) {
