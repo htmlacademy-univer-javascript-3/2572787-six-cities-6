@@ -5,7 +5,7 @@ import AppRoute from '../../const/app-route';
 import { render, screen } from '@testing-library/react';
 import AuthorizationStatus from '../../const/authorization-status';
 
-vi.mock('../../pages/MainPage/MainPage', () => {
+vi.mock('../../pages/main-page/main-page', () => {
   const mockMainPage = () => <span>Main page</span>;
 
   return {
@@ -13,7 +13,7 @@ vi.mock('../../pages/MainPage/MainPage', () => {
   };
 });
 
-vi.mock('../../pages/LoginPage/LoginPage', () => {
+vi.mock('../../pages/login-page/login-page', () => {
   const mockLoginPage = () => <span>Login page</span>;
 
   return {
@@ -21,7 +21,7 @@ vi.mock('../../pages/LoginPage/LoginPage', () => {
   };
 });
 
-vi.mock('../../pages/FavoritesPage/FavoritesPage', () => {
+vi.mock('../../pages/favorites-page/favorites-page', () => {
   const mockFavoritesPage = () => <span>Favorites page</span>;
 
   return {
@@ -29,7 +29,7 @@ vi.mock('../../pages/FavoritesPage/FavoritesPage', () => {
   };
 });
 
-vi.mock('../../pages/NotFoundPage/NotFoundPage', () => {
+vi.mock('../../pages/not-found-page/not-found-page', () => {
   const mockNotFoundPage = () => <span>NotFound page</span>;
 
   return {
@@ -37,7 +37,7 @@ vi.mock('../../pages/NotFoundPage/NotFoundPage', () => {
   };
 });
 
-vi.mock('../../pages/PlacePage/PlacePage', () => {
+vi.mock('../../pages/place-page/place-page', () => {
   const mockPlacePage = () => <span>Place page</span>;
 
   return {

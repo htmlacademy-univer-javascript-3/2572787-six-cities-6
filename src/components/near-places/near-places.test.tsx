@@ -4,11 +4,11 @@ import NearPlaces from './near-places';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 import { mockPlace } from '../../test-utils/mocks';
 
-vi.mock('../Map/Map', () => ({
+vi.mock('../map/map', () => ({
   default: () => <div data-testid="map">Map</div>,
 }));
 
-vi.mock('../PlaceCards/PlaceCards', () => ({
+vi.mock('../place-cards/place-cards', () => ({
   default: () => <div data-testid="place-cards">PlaceCards</div>,
 }));
 

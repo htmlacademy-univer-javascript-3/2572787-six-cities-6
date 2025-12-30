@@ -6,7 +6,7 @@ import { withHistory, withStore } from '../../test-utils/mock-components';
 import { extractActionsTypes } from '../../test-utils/mocks';
 import { fetchFavoritePlacesAction, loginUser } from '../../store/api-actions';
 
-vi.mock('../../components/Logo/Logo', () => ({
+vi.mock('../../components/logo/logo', () => ({
   default: () => <div>Logo</div>,
 }));
 

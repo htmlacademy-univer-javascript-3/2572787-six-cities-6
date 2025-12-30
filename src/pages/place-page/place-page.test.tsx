@@ -11,7 +11,7 @@ import {
 } from '../../test-utils/mocks';
 import AuthorizationStatus from '../../const/authorization-status';
 
-vi.mock('../../components/Spinner/Spinner', () => {
+vi.mock('../../components/spinner/spinner', () => {
   const mockSpinner = () => <span>Loading...</span>;
 
   return {
@@ -19,7 +19,7 @@ vi.mock('../../components/Spinner/Spinner', () => {
   };
 });
 
-vi.mock('../../components/NearPlaces/NearPlaces', () => {
+vi.mock('../../components/near-places/near-places', () => {
   const mockNearPlaces = () => <span>Near Places</span>;
 
   return {
@@ -27,7 +27,7 @@ vi.mock('../../components/NearPlaces/NearPlaces', () => {
   };
 });
 
-vi.mock('../../components/Reviews/Reviews', () => {
+vi.mock('../../components/reviews/reviews', () => {
   const mockReviews = () => <span>Reviews</span>;
 
   return {
