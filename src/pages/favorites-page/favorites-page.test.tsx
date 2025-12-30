@@ -5,10 +5,10 @@ import { withHistory, withStore } from '../../test-utils/mock-components';
 import { mockPlace } from '../../test-utils/mocks';
 import AuthorizationStatus from '../../const/authorization-status';
 
-vi.mock('../../components/Logo/Logo', () => ({
+vi.mock('../../components/logo/logo', () => ({
   default: () => <div>Logo</div>,
 }));
-vi.mock('../../components/Header/Header', () => ({
+vi.mock('../../components/header/header', () => ({
   default: () => <header>Header</header>,
 }));
 

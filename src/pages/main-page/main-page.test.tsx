@@ -7,13 +7,13 @@ import cities from '../../mocks/cities';
 import { extractActionsTypes, mockPlace } from '../../test-utils/mocks';
 import { changeCity } from '../../store/slices/city';
 
-vi.mock('../../components/Header/Header', () => ({
+vi.mock('../../components/header/header', () => ({
   default: () => <header>Header</header>,
 }));
-vi.mock('../../components/Cities/Cities', () => ({
+vi.mock('../../components/cities/cities', () => ({
   default: () => <div>Cities</div>,
 }));
-vi.mock('../../components/EmptyCities/EmptyCities', () => ({
+vi.mock('../../components/empty-cities/empty-cities', () => ({
   default: () => <div>EmptyCities</div>,
 }));
 

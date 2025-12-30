@@ -7,6 +7,7 @@ import cities from '../mocks/cities';
 vi.mock('leaflet', () => {
   const mockMap = {
     addLayer: vi.fn(),
+    setView: vi.fn(),
   };
 
   const mockTileLayer = vi.fn();
@@ -48,7 +49,7 @@ describe('useMap', () => {
         lat: mockCity.location.latitude,
         lng: mockCity.location.longitude,
       },
-      zoom: 10,
+      zoom: 13,
     });
 
     expect(TileLayer).toHaveBeenCalledTimes(1);

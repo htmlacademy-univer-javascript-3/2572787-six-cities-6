@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import NotFoundPage from './not-found-page';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 
-vi.mock('../../components/Header/Header', () => ({
+vi.mock('../../components/header/header', () => ({
   default: () => <header>Header</header>,
 }));
 

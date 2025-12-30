@@ -4,7 +4,7 @@ import { mockReview } from '../../test-utils/mocks';
 import { withStore } from '../../test-utils/mock-components';
 import AuthorizationStatus from '../../const/authorization-status';
 
-vi.mock('../ReviewForm/ReviewForm', () => ({
+vi.mock('../review-form/review-form', () => ({
   default: () => <div>Form</div>,
 }));
 
